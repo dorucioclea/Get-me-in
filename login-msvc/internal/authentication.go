@@ -1,10 +1,10 @@
 package internal
 
 import (
+	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"github/Get-me-in/login-msvc/pkg/models"
 	"net/http"
-	"os"
 )
 
 // A fundamental concept in `net/http` servers is
@@ -12,45 +12,47 @@ import (
 // `http.Handler` interface. A common way to write
 // a handler is by using the `http.HandlerFunc` adapter
 // on functions with the appropriate signature.
-func Connection(w http.ResponseWriter, req *http.Request) {
+func APIInfo(w http.ResponseWriter, req *http.Request) {
+	
+	m := models.Message{"1.0", "GO", "1.13.5"}
+	b, err := json.Marshal(m)
 
-// Functions serving as handlers take a
-// `http.ResponseWriter` and a `http.Request` as
-// arguments. The response writer is used to fill in the
-// HTTP response. Here our simple response is just
-// "hello\n".
-	fmt.Fprintf(w, "Connection: OK \n")
+	if err != nil {
+		fmt.Sprintf(err.Error())
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(b))
 }
 
 func Headers(w http.ResponseWriter, req *http.Request) {
 
-// This handler does something a little more
-// sophisticated by reading all the HTTP request
-// headers and echoing them into the response body.
+	// This handler does something a little more
+	// sophisticated by reading all the HTTP request
+	// headers and echoing them into the response body.
 	for name, headers := range req.Header {
 		for _, h := range headers {
-		fmt.Fprintf(w, "%v: %v\n", name, h)
+			fmt.Fprintf(w, "%v: %v\n", name, h)
 		}
 	}
-}
 
-func GET(w http.ResponseWriter, req *http.Request) {
+	/* EXAMPLE GET Request */
+	/*
+	   func GET(w http.ResponseWriter, req *http.Request) {
 
-	response, err := http.Get("http://golang.org/")
-	
-	if err != nil {
-		fmt.Printf("%s", err)
-		os.Exit(1)
-	} else {
-		defer response.Body.Close()
-		contents, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			fmt.Printf("%s", err)
-			os.Exit(1)
-		}
-		fmt.Printf("%s\n", string(contents))
-	}
+	   	response, err := http.Get("http://golang.org/")
 
-	w.WriteHeader(http.StatusInternalServerError)
-	w.Write([]byte("500 - Something bad happened!"))
+	   	if err != nil {
+	   		fmt.Printf("%s", err)
+	   		os.Exit(1)
+	   	} else {
+	   		defer response.Body.Close()
+	   		contents, err := ioutil.ReadAll(response.Body)
+	   		if err != nil {
+	   			fmt.Printf("%s", err)
+	   			os.Exit(1)
+	   		}
+	   		fmt.Printf("%s\n", string(contents))
+	   	}
+	*/
 }

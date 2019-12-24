@@ -6,7 +6,7 @@ import (
 
 func SetupEndpoints(){
 
-	http.HandleFunc("/", Connection)
+	http.HandleFunc("/", APIInfo)
 	http.HandleFunc("/headers", Headers)
 	http.HandleFunc("/get", GET)
 }

@@ -11,37 +11,46 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/main.go">
+        <entry file="file://$PROJECT_DIR$/../login-msvc/cmd/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configs/confd.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/routes.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#37#87#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/internal/authentication.go">
+        <entry file="file://$PROJECT_DIR$/../login-msvc/internal/authentication.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+            <state relative-caret-position="193">
+              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+              <folding>
+                <element signature="e#18#66#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../login-msvc/pkg/models/structs.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../login-msvc/internal/routes.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+              <folding>
+                <element signature="e#18#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -77,6 +86,10 @@
         <option value="$PROJECT_DIR$/internal/routes.go" />
         <option value="$PROJECT_DIR$/cmd/main.go" />
         <option value="$PROJECT_DIR$/cmd/main.go" />
+        <option value="$PROJECT_DIR$/../login-msvc/cmd/main.go" />
+        <option value="$PROJECT_DIR$/../login-msvc/internal/routes.go" />
+        <option value="$PROJECT_DIR$/../login-msvc/pkg/models/struct.go" />
+        <option value="$PROJECT_DIR$/../login-msvc/internal/authentication.go" />
       </list>
     </option>
   </component>
@@ -96,23 +109,34 @@
         <subPane>
           <expand>
             <path>
-              <item name="ProjectReferral" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectReferral" type="462c0819:PsiDirectoryNode" />
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ProjectReferral" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectReferral" type="462c0819:PsiDirectoryNode" />
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
               <item name="cmd" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ProjectReferral" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectReferral" type="462c0819:PsiDirectoryNode" />
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
               <item name="configs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="ProjectReferral" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ProjectReferral" type="462c0819:PsiDirectoryNode" />
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
               <item name="internal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
+              <item name="pkg" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="login-msvc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="login-msvc" type="462c0819:PsiDirectoryNode" />
+              <item name="pkg" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -130,7 +154,7 @@
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/cmd/main.go" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoProjectSettingsConfigurable" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/build" />
   </component>
   <component name="RecentsManager">
@@ -209,32 +233,32 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>41</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>42</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>45</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>46</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>48</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
+          <url>file://$PROJECT_DIR$/../login-msvc/internal/authentication.go</url>
           <line>50</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -249,31 +273,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmd/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/internal/routes.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configs/confd.go">
+    <entry file="file://$PROJECT_DIR$/../login-msvc/configs/confd.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="18" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/authentication.go">
+    <entry file="file://$PROJECT_DIR$/../login-msvc/cmd/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#37#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../login-msvc/internal/routes.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <folding>
+            <element signature="e#18#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../login-msvc/pkg/models/structs.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../login-msvc/internal/authentication.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
+          <folding>
+            <element signature="e#18#66#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
