@@ -1,9 +1,9 @@
 package configs
 
 type User struct {
-	uuid      string `json:"id"`
-	firstname string `json:"firstname"`
-	surname   string `json:"surname"`
-	email     string `json:"email"`
-	password  string `json:"password"`
+	Uuid      string `json:"id"`
+	Firstname string `json:"firstname"`
+	Surname   string `json:"surname"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
 }
