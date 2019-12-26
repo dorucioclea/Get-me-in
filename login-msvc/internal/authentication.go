@@ -3,6 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+	"github/Get-me-in/login-msvc/internal/security"
 	"github/Get-me-in/login-msvc/pkg/models"
 	"net/http"
 )
@@ -13,8 +14,8 @@ import (
 // a handler is by using the `http.HandlerFunc` adapter
 // on functions with the appropriate signature.
 func APIInfo(w http.ResponseWriter, req *http.Request) {
-	
-	m := models.Message{"1.0", "GO", "1.13.5"}
+
+	m := models.Message{"1.0", "GO", "1.13.5", security.GenerateToken()}
 	b, err := json.Marshal(m)
 
 	if err != nil {

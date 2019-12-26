@@ -8,5 +8,5 @@ func SetupEndpoints(){
 
 	http.HandleFunc("/", APIInfo)
 	http.HandleFunc("/headers", Headers)
-	http.HandleFunc("/get", GET)
+	//http.HandleFunc("/get", GET)
 }
