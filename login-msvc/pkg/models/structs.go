@@ -6,3 +6,8 @@ type Message struct {
 	Version string
 	Token string
 }
+
+type Client struct {
+	Username string
+	Password string
+}
