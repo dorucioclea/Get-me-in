@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github/Get-me-in/account-service/configs"
 	"github/Get-me-in/account-service/internal"
+	"github/Get-me-in/account-service/pkg/dynamodb"
 	"os"
 )
 
@@ -12,24 +12,28 @@ func main() {
 	internal.SetupEndpoints()
 }
 
+//TODO: improve workflow
 func loadEnvConfigs() {
 
 	fmt.Print("Running on ")
+
+	dynamodb.SearchParam = "email"
+
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
-		configs.DYNAMO_TABLE = "dev-users"
+		dynamodb.DynamoTable = "dev-users"
 		fmt.Println(env)
 
 	case "UAT":
-		configs.DYNAMO_TABLE = "uat-users"
+		dynamodb.DynamoTable = "uat-users"
 		fmt.Println(env)
 
 	case "PROD":
-		configs.DYNAMO_TABLE = "uat-users"
+		dynamodb.DynamoTable = "uat-users"
 		fmt.Println(env)
 
 	default:
-		configs.DYNAMO_TABLE = "dev-users"
+		dynamodb.DynamoTable = "dev-users"
 		fmt.Println(env)
 	}
 }
