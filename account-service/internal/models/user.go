@@ -1,4 +1,4 @@
-package configs
+package models
 
 type User struct {
 	Uuid      string `json:"id"`

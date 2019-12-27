@@ -1,29 +1,25 @@
-package main
+package internal
 
 import (
-	"fmt"
-	internal "github/Get-me-in/account-service/internal"
+	"github.com/gorilla/mux"
+	"github/Get-me-in/account-service/configs"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
-func main() {
-	fmt.Println("Working")
+func SetupEndpoints() {
 
 	_router := mux.NewRouter()
 
-	_router.HandleFunc("/test", internal.TestFunc)
+	_router.HandleFunc("/test", TestFunc)
 
 	// // Register
-	_router.HandleFunc("/account", internal.CreateUser).Methods("PUT")
+	_router.HandleFunc("/account", CreateUser).Methods("PUT")
 	// _router.HandleFunc("/account/{id}", DeleteUser).Methods("DELETE")
 	// _router.HandleFunc("/account", UpdateUser).Methods("PATCH")
 	// _router.HandleFunc("/account/{id}", GetUser).Methods("GET")
 	// _router.HandleFunc("/account", GetUsers).Methods("GET")
 	// _router.HandleFunc("/account/verify", Login).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8000", _router))
-
+	log.Fatal(http.ListenAndServe(configs.PORT, _router))
 }

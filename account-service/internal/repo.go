@@ -3,6 +3,8 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+	"github/Get-me-in/account-service/configs"
+	"github/Get-me-in/account-service/internal/models"
 	"net/http"
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -18,31 +20,18 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// var sess = session.Must(session.NewSessionWithOptions(session.Options{
-// 	SharedConfigState: session.SharedConfigEnable,
-// }))
-
-type Item struct {
-	Uuid      string `json:"id"`
-	Firstname string `json:"firstname"`
-	Surname   string `json:"surname"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-}
-
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 
-	//credentials.NewStaticCredentials("asd", "asd", "asd")
 	var c = credentials.NewSharedCredentials("", "default")
 
 	sess, err := session.NewSession(&aws.Config{
-		Region:      aws.String("eu-west-2"),
+		Region:      aws.String(configs.EU_WEST_2),
 		Credentials: c,
 	})
 
 	var svc = dynamodb.New(sess)
 
-	var u Item
+	var u models.User
 
 	// Try to decode th
 	//e request body into the struct. If there is an error,
@@ -63,7 +52,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create User using body info being passed in when the endpoint is called
-	account := Item{
+	account := models.User{
 		Uuid:      u.Uuid,
 		Firstname: u.Firstname,
 		Surname:   u.Surname,
@@ -71,7 +60,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		Password:  u.Password,
 	}
 
-	// Converting shit to dynamo type
 	av, err := dynamodbattribute.MarshalMap(account)
 
 	if err != nil {
@@ -84,7 +72,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	// Adding user to database..
 	input := &dynamodb.PutItemInput{
 		Item:      av,
-		TableName: aws.String("Users"),
+		TableName: aws.String(configs.DYNAMO_TABLE),
 	}
 
 	_, err = svc.PutItem(input)
