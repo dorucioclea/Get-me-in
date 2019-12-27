@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github/Get-me-in/login-msvc/configs"
 	"github/Get-me-in/login-msvc/internal/security"
 	"github/Get-me-in/login-msvc/pkg/models"
 	"io/ioutil"
@@ -14,22 +15,21 @@ import (
 
 func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 
-	body, err2 := ioutil.ReadAll(req.Body)
+	body, err := ioutil.ReadAll(req.Body)
 
-	if err2 != nil{
-		log.Fatal(err2)
+	if err != nil{
+		log.Fatal(err)
 	}
 
-	resp, err := http.Post("http://localhost:8080/mock", "application/json" , bytes.NewBuffer(body))
+	resp, respErr := http.Post(configs.VERIFY_ACCOUNT, "application/json" , bytes.NewBuffer(body))
 
-	if err != nil {
-		log.Fatal(err)
+	if respErr != nil {
+		log.Fatal(respErr)
 	}
 
 	if resp.StatusCode == 200 {
 
-		m := models.Message{"1.0",
-			"GO",
+		m := models.Message{configs.API_VERSION,
 			runtime.Version(),
 			security.GenerateToken()}
 		b, err := json.Marshal(m)
@@ -42,8 +42,4 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(b))	}
 
 	w.WriteHeader(http.StatusUnauthorized)
-}
-
-func MockResponse(w http.ResponseWriter, req *http.Request){
-	w.WriteHeader(http.StatusOK)
 }
