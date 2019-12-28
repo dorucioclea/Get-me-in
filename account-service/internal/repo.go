@@ -3,7 +3,7 @@ package internal
 import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github/Get-me-in/account-service/configs"
-	"github/Get-me-in/account-service/pkg/dynamodb"
+	"github/Get-me-in/pkg/dynamodb"
 	"net/http"
 )
 
