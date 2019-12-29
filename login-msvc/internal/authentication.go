@@ -5,8 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github/Get-me-in/login-msvc/configs"
-	"github/Get-me-in/login-msvc/internal/security"
-	"github/Get-me-in/login-msvc/pkg/models"
+	"github/Get-me-in/pkg/security"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -29,7 +28,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 
 	if resp.StatusCode == 200 {
 
-		m := models.Message{configs.API_VERSION,
+		m := Message{configs.API_VERSION,
 			runtime.Version(),
 			security.GenerateToken()}
 		b, err := json.Marshal(m)
@@ -42,4 +41,9 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(b))	}
 
 	w.WriteHeader(http.StatusUnauthorized)
+}
+
+func MockResponse(w http.ResponseWriter, req *http.Request){
+	w.Write([]byte("OK"))
+	w.WriteHeader(http.StatusOK)
 }

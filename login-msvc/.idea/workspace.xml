@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7339472f-0aba-46d8-8980-3d3d57c07a0d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/structs.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/confd.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/confd.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/authentication.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/models/structs.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/models/structs.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +43,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
@@ -70,7 +72,7 @@
       <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
-      <module name="ProjectReferral" />
+      <module name="login-msvc" />
       <working_directory value="$PROJECT_DIR$" />
       <go_parameters value="-i" />
       <kind value="FILE" />
@@ -106,22 +108,26 @@
       <screen x="0" y="23" width="1680" height="969" />
     </state>
     <state x="219" y="188" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.969@0.23.1680.969" timestamp="1577314147596" />
-    <state width="1358" height="247" key="GridCell.Tab.0.bottom" timestamp="1577373185796">
+    <state x="520" y="161" key="#go_build_main.go" timestamp="1577629998767">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state width="1358" height="247" key="GridCell.Tab.0.bottom/0.23.1680.969@0.23.1680.969" timestamp="1577373185796" />
-    <state width="1358" height="247" key="GridCell.Tab.0.center" timestamp="1577373185796">
+    <state x="520" y="161" key="#go_build_main.go/0.23.1680.969@0.23.1680.969" timestamp="1577629998767" />
+    <state width="1358" height="247" key="GridCell.Tab.0.bottom" timestamp="1577630059486">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state width="1358" height="247" key="GridCell.Tab.0.center/0.23.1680.969@0.23.1680.969" timestamp="1577373185796" />
-    <state width="1358" height="247" key="GridCell.Tab.0.left" timestamp="1577373185795">
+    <state width="1358" height="247" key="GridCell.Tab.0.bottom/0.23.1680.969@0.23.1680.969" timestamp="1577630059486" />
+    <state width="1358" height="247" key="GridCell.Tab.0.center" timestamp="1577630059485">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state width="1358" height="247" key="GridCell.Tab.0.left/0.23.1680.969@0.23.1680.969" timestamp="1577373185795" />
-    <state width="1358" height="247" key="GridCell.Tab.0.right" timestamp="1577373185796">
+    <state width="1358" height="247" key="GridCell.Tab.0.center/0.23.1680.969@0.23.1680.969" timestamp="1577630059485" />
+    <state width="1358" height="247" key="GridCell.Tab.0.left" timestamp="1577630059484">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state width="1358" height="247" key="GridCell.Tab.0.right/0.23.1680.969@0.23.1680.969" timestamp="1577373185796" />
+    <state width="1358" height="247" key="GridCell.Tab.0.left/0.23.1680.969@0.23.1680.969" timestamp="1577630059484" />
+    <state width="1358" height="247" key="GridCell.Tab.0.right" timestamp="1577630059485">
+      <screen x="0" y="23" width="1680" height="969" />
+    </state>
+    <state width="1358" height="247" key="GridCell.Tab.0.right/0.23.1680.969@0.23.1680.969" timestamp="1577630059485" />
     <state width="1358" height="151" key="GridCell.Tab.1.bottom" timestamp="1577373176479">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
@@ -144,60 +150,6 @@
     <state x="252" y="165" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1577314408164" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>53</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>54</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>58</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>59</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>61</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>63</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>22</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>47</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>24</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/authentication.go</url>
-          <line>28</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="GoApplicationRunConfiguration">
         <watch expression="req.Body" />
