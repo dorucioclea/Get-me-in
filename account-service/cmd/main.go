@@ -17,7 +17,7 @@ func loadEnvConfigs() {
 
 	fmt.Print("Running on ")
 
-	dynamodb.SearchParam = "email"
+	dynamodb.SearchParam = "Email"
 
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
