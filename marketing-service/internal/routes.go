@@ -2,7 +2,7 @@ package internal
 
 import (
 	"github.com/gorilla/mux"
-	"github/Get-me-in/marketing-service/internal/security"
+	"github/Get-me-in/pkg/security"
 	"net/http"
 )
 
@@ -21,9 +21,10 @@ func wrapHandlerWithAuth(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		a := req.Header.Get("Authorization")
 
-		if security.VerifyToken(a) {
-			handler(w, req)
+		if security.VerifyToken(a) && a != "" {
+			handler(w,req)
 		}
+
 		w.WriteHeader(http.StatusUnauthorized)
 	}
 }
