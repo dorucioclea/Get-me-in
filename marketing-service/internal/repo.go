@@ -2,13 +2,13 @@ package internal
 
 import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github/Get-me-in/account-service/configs"
+	"github/Get-me-in/marketing-service/configs"
 	"github/Get-me-in/pkg/dynamodb"
 	"net/http"
 )
 
 func TestFunc(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
@@ -18,16 +18,7 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 	dynamodb.Connect(w, c, configs.EU_WEST_2)
 }
 
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+func CreateAdvert(w http.ResponseWriter, r *http.Request) {
 
 	dynamodb.CreateItem(w, DecodeToDynamoAttribute(w, r))
-}
-
-func Login(w http.ResponseWriter, r *http.Request){
-
-	body, found := dynamodb.GetItem(w, configs.FIND_BY_EMAIL, DecodeToJSON(w, r.Body).Email)
-
-	if found {
-		w.Write([]byte(body))
-	}
 }

@@ -1,56 +1,49 @@
 package internal
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"github/Get-me-in/login-msvc/configs"
+	"github/Get-me-in/pkg/security"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"os"
+	"runtime"
 )
 
-// A fundamental concept in `net/http` servers is
-// *handlers*. A handler is an object implementing the
-// `http.Handler` interface. A common way to write
-// a handler is by using the `http.HandlerFunc` adapter
-// on functions with the appropriate signature.
-func Connection(w http.ResponseWriter, req *http.Request) {
+func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 
-// Functions serving as handlers take a
-// `http.ResponseWriter` and a `http.Request` as
-// arguments. The response writer is used to fill in the
-// HTTP response. Here our simple response is just
-// "hello\n".
-	fmt.Fprintf(w, "Connection: OK \n")
-}
+	body, err := ioutil.ReadAll(req.Body)
 
-func Headers(w http.ResponseWriter, req *http.Request) {
-
-// This handler does something a little more
-// sophisticated by reading all the HTTP request
-// headers and echoing them into the response body.
-	for name, headers := range req.Header {
-		for _, h := range headers {
-		fmt.Fprintf(w, "%v: %v\n", name, h)
-		}
+	if err != nil{
+		log.Fatal(err)
 	}
-}
 
-func GET(w http.ResponseWriter, req *http.Request) {
+	resp, respErr := http.Post(configs.VERIFY_ACCOUNT, "application/json" , bytes.NewBuffer(body))
 
-	response, err := http.Get("http://golang.org/")
-	
-	if err != nil {
-		fmt.Printf("%s", err)
-		os.Exit(1)
-	} else {
-		defer response.Body.Close()
-		contents, err := ioutil.ReadAll(response.Body)
+	if respErr != nil {
+		log.Fatal(respErr)
+	}
+
+	if resp.StatusCode == 200 {
+
+		m := Message{configs.API_VERSION,
+			runtime.Version(),
+			security.GenerateToken()}
+		b, err := json.Marshal(m)
+
 		if err != nil {
-			fmt.Printf("%s", err)
-			os.Exit(1)
+			fmt.Sprintf(err.Error())
 		}
-		fmt.Printf("%s\n", string(contents))
-	}
 
-	w.WriteHeader(http.StatusInternalServerError)
-	w.Write([]byte("500 - Something bad happened!"))
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(b))	}
+
+	w.WriteHeader(http.StatusUnauthorized)
+}
+
+func MockResponse(w http.ResponseWriter, req *http.Request){
+	w.Write([]byte("OK"))
+	w.WriteHeader(http.StatusOK)
 }

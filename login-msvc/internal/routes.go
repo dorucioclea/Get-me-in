@@ -5,8 +5,6 @@ import (
 )
 
 func SetupEndpoints(){
-
-	http.HandleFunc("/", Connection)
-	http.HandleFunc("/headers", Headers)
-	http.HandleFunc("/get", GET)
+	http.HandleFunc("/auth", VerifyCredentials)
+	http.HandleFunc("/mock", MockResponse)
 }
