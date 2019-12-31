@@ -26,3 +26,7 @@ jobs:
 
     - name: Build
       run: go build -v ./account-service/cmd
+    - name: Build
+      run: go build -v ./login-msvc/cmd
+    - name: Build
+      run: go build -v ./marketing-service/cmd
