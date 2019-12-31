@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github/Get-me-in/account-service/internal"
-	"github/Get-me-in/pkg/dynamodb"
+	"../internal"
+	"../../pkg/dynamodb"
 	"os"
 )
 

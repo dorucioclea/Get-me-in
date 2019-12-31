@@ -2,7 +2,7 @@ package internal
 
 import (
 	"github.com/gorilla/mux"
-	"github/Get-me-in/account-service/configs"
+	"../configs"
 	"log"
 	"net/http"
 )

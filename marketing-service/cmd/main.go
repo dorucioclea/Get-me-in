@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github/Get-me-in/marketing-service/configs"
-	"github/Get-me-in/marketing-service/internal"
-	"github/Get-me-in/pkg/dynamodb"
+	"../configs"
+	"../internal"
+	"../../pkg/dynamodb"
 	"log"
 	"net/http"
 	"os"
