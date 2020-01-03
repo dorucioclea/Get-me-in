@@ -1,15 +1,15 @@
 package internal
 
 import (
+	"Get-me-in/login-msvc/configs"
+	"Get-me-in/pkg/security"
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github/Get-me-in/login-msvc/configs"
-	"github/Get-me-in/pkg/security"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"runtime"
+	"time"
 )
 
 func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
@@ -20,17 +20,29 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		log.Fatal(err)
 	}
 
-	resp, respErr := http.Post(configs.VERIFY_ACCOUNT, "application/json" , bytes.NewBuffer(body))
+
+	resp, respErr := http.Post("http://localhost:5000/mock", "application/json" , bytes.NewBuffer(body))
 
 	if respErr != nil {
 		log.Fatal(respErr)
 	}
 
+	t := time.Now()
 	if resp.StatusCode == 200 {
 
-		m := Message{configs.API_VERSION,
-			runtime.Version(),
-			security.GenerateToken()}
+		t := security.TokenClaims{Issuer: configs.SERVICE_ID,
+			Subject:    configs.SUBJECT,
+			Audience:   req.Header.Get("Origin"),
+			Expiration: t.Add(360 * time.Minute).String(),
+			NotBefore:  t.Add(360 * time.Minute).String(),
+			IssuedAt:   t.String(),
+			Id:         "a",}
+
+		m := security.TokenResponse{security.GenerateToken(t),
+			configs.BEARER,
+			configs.EXPIRY,
+			"N/A"}
+
 		b, err := json.Marshal(m)
 
 		if err != nil {

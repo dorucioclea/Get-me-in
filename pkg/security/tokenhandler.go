@@ -5,8 +5,15 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken() string{
+func GenerateToken(claim TokenClaims) string{
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"iss":claim.Issuer,
+		"sub":claim.Subject,
+		"aud":claim.Audience,
+		"exp":claim.Expiration,
+		"nbf":claim.NotBefore,
+		"iat":claim.IssuedAt,
+		"jti":claim.Id,
 	})
 
 	// Sign and get the complete encoded token as a string using the secret

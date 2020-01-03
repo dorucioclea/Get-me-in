@@ -1,9 +1,9 @@
 package main
 
 import (
-"github/Get-me-in/login-msvc/configs"
-"github/Get-me-in/login-msvc/internal"
-"net/http"
+	"Get-me-in/login-msvc/configs"
+	"Get-me-in/login-msvc/internal"
+	"net/http"
 )
 
 func main() {
