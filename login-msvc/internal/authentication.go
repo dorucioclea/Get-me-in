@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"Get-me-in/login-msvc/configs"
-	"Get-me-in/pkg/security"
+	"../../pkg/security"
+	"../configs"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -20,25 +20,27 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		log.Fatal(err)
 	}
 
-
-	resp, respErr := http.Post("http://localhost:5000/mock", "application/json" , bytes.NewBuffer(body))
+	resp, respErr := http.Post(configs.VERIFY_ACCOUNT, "application/json" , bytes.NewBuffer(body))
 
 	if respErr != nil {
 		log.Fatal(respErr)
 	}
 
 	t := time.Now()
+	e := t.Add(360 * time.Minute).String()
 	if resp.StatusCode == 200 {
 
-		t := security.TokenClaims{Issuer: configs.SERVICE_ID,
+		t := security.TokenClaims{
+			Issuer: configs.SERVICE_ID,
 			Subject:    configs.SUBJECT,
 			Audience:   req.Header.Get("Origin"),
-			Expiration: t.Add(360 * time.Minute).String(),
-			NotBefore:  t.Add(360 * time.Minute).String(),
 			IssuedAt:   t.String(),
+			Expiration: e,
+			NotBefore:  e,
 			Id:         "a",}
 
-		m := security.TokenResponse{security.GenerateToken(t),
+		m := security.TokenResponse{
+			security.GenerateToken(t),
 			configs.BEARER,
 			configs.EXPIRY,
 			"N/A"}
@@ -50,7 +52,8 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(b))	}
+		w.Write([]byte(b))
+	}
 
 	w.WriteHeader(http.StatusUnauthorized)
 }

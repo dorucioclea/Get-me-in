@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Get-me-in/login-msvc/configs"
-	"Get-me-in/login-msvc/internal"
+	"../configs"
+	"../internal"
 	"net/http"
 )
 
