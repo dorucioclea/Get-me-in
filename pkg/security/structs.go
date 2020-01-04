@@ -11,8 +11,10 @@ type TokenClaims struct{
 	Issuer 		string
 	Subject 	string
 	Audience 	string
-	Expiration 	string
-	NotBefore 	string
-	IssuedAt 	string
+	Expiration 	int64
+	NotBefore 	int64
+	IssuedAt 	int64
 	Id			string
 }
+
+
