@@ -1,14 +1,12 @@
 package internal
 
 import (
-	"encoding/json"
-	"fmt"
+	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/models"
+	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github/Get-me-in/account-service/configs"
-	"github/Get-me-in/account-service/internal/models"
-	"github/Get-me-in/pkg/dynamodb"
-	"io"
 	"log"
+	"io"
 	"net/http"
 )
 
