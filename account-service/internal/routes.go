@@ -2,10 +2,10 @@ package internal
 
 import (
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	"github/Get-me-in/pkg/security"
 	"fmt"
 )
 

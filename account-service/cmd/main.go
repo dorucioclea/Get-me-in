@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal"
-	"github.com/ProjectReferral/Get-me-in/account-service/models"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
 )
