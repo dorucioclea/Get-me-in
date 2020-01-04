@@ -12,6 +12,7 @@ var DynamoTable string
 //search by specific item paramater
 var SearchParam string
 var DynamoConnection *dynamodb.DynamoDB
+var GenericModel interface{}
 
 func Connect(w http.ResponseWriter, c *credentials.Credentials, r string) {
 
