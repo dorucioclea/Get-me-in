@@ -4,6 +4,10 @@ jobs:
     docker:
       # specify the version
       - image: circleci/golang:1.9
+  
+  # branches:
+  #     only:
+  #       - master
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -28,3 +32,5 @@ jobs:
       # specify any bash command here prefixed with `run: `
       - run: go get -v -t -d ./account-service/...
       - run: go build -v ./account-service/cmd
+      - run: go get -v -t -d ./login-mscv/...
+      - run: go build -v ./login-mscv/cmd
