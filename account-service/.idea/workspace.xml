@@ -7,9 +7,6 @@
       <change beforePath="$PROJECT_DIR$/internal/modeldecoding.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modeldecoding.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/repo.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../login-msvc/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../login-msvc/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../login-msvc/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../login-msvc/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../login-msvc/internal/authentication.go" beforeDir="false" afterPath="$PROJECT_DIR$/../login-msvc/internal/authentication.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +38,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RunManager">
     <configuration name="go build routes.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
@@ -122,10 +119,10 @@
       <screen x="0" y="23" width="1680" height="969" />
     </state>
     <state width="1358" height="306" key="GridCell.Tab.1.right/0.23.1680.969@0.23.1680.969" timestamp="1577313679321" />
-    <state x="349" y="146" key="SettingsEditor" timestamp="1577232145431">
+    <state x="349" y="146" key="SettingsEditor" timestamp="1578091016871">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state x="349" y="146" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1577232145431" />
+    <state x="349" y="146" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1578091016871" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

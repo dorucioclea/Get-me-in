@@ -1,8 +1,8 @@
 package internal
 
 import (
+	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"github.com/gorilla/mux"
-	"../../pkg/security"
 	"net/http"
 )
 

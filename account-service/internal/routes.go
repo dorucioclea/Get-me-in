@@ -1,8 +1,8 @@
 package internal
 
 import (
+	"github.com/ProjectReferral/Get-me-in/account-service/configs"
 	"github.com/gorilla/mux"
-	"../configs"
 	"log"
 	"net/http"
 )
