@@ -2,9 +2,9 @@ package internal
 
 import (
 	"encoding/json"
+	"github.com/ProjectReferral/Get-me-in/marketing-service/internal/models"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"github/Get-me-in/marketing-service/internal/models"
 	"io"
 	"net/http"
 )

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f08a71c-93e8-474c-97e9-e690d7f08685" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="4f08a71c-93e8-474c-97e9-e690d7f08685" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/modeldecoding.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modeldecoding.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/repo.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routes.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,8 +63,8 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../login-msvc" />
-    <property name="settings.editor.selected.configurable" value="go.sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -136,6 +141,10 @@
       <screen x="0" y="23" width="1680" height="969" />
     </state>
     <state x="219" y="188" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1680.969@0.23.1680.969" timestamp="1577232773385" />
+    <state x="530" y="255" key="#go_build_routes.go" timestamp="1577816565642">
+      <screen x="0" y="23" width="1680" height="969" />
+    </state>
+    <state x="530" y="255" key="#go_build_routes.go/0.23.1680.969@0.23.1680.969" timestamp="1577816565642" />
     <state width="548" height="466" key="DebuggerActiveHint" timestamp="1577233694286">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
@@ -172,10 +181,10 @@
       <screen x="0" y="23" width="1680" height="969" />
     </state>
     <state width="1358" height="306" key="GridCell.Tab.1.right/0.23.1680.969@0.23.1680.969" timestamp="1577313679321" />
-    <state x="349" y="146" key="SettingsEditor" timestamp="1577232145431">
+    <state x="349" y="146" key="SettingsEditor" timestamp="1578091016871">
       <screen x="0" y="23" width="1680" height="969" />
     </state>
-    <state x="349" y="146" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1577232145431" />
+    <state x="349" y="146" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1578091016871" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

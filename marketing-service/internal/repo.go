@@ -1,9 +1,9 @@
 package internal
 
 import (
+	"github.com/ProjectReferral/Get-me-in/marketing-service/configs"
+	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github/Get-me-in/marketing-service/configs"
-	"github/Get-me-in/pkg/dynamodb"
 	"net/http"
 )
 
