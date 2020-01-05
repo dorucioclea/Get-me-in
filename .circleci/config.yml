@@ -5,7 +5,9 @@ jobs:
       # specify the version
       - image: getmein1234/get-me-in
     steps:
-      - run: go version
+      # - checkout
+      - run: ls
+      # - run: go build -v ./account-service/cmd
       
     # working_directory: /go/src/github.com/ProjectReferral/Get-me-in
     # steps:
