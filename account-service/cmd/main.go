@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"../internal"
-	"../../pkg/dynamodb"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal"
+	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
+	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
 )
 
@@ -17,7 +19,8 @@ func loadEnvConfigs() {
 
 	fmt.Print("Running on ")
 
-	dynamodb.SearchParam = "email"
+	dynamodb.SearchParam = configs.QUERY_PARAM
+	dynamodb.GenericModel = models.User{}
 
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
