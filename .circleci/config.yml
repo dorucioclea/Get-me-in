@@ -4,10 +4,13 @@ jobs:
     docker:
       # specify the version
       - image: getmein1234/get-me-in
-      
-    working_directory: /go/src/github.com/ProjectReferral/Get-me-in
     steps:
-      - checkout
+      - run: go version
+      
+    # working_directory: /go/src/github.com/ProjectReferral/Get-me-in
+    # steps:
+    #   - checkout
+    #   - run: go version
 #       - run:
 #           name: post checkout check
 #           command: |
@@ -17,9 +20,6 @@ jobs:
 #             ls -aslh ~/tmp
 
       # specify any bash command here prefixed with `run: `
-
-        - run: go version
-
       # - run: go get -v -t -d ./account-service/...
       # - run: go build -v ./account-service/cmd
 
