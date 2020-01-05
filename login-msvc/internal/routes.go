@@ -7,11 +7,11 @@ import (
 )
 
 func SetupEndpoints(){
-	http.HandleFunc("/auth", VerifyCredentials)
-	http.HandleFunc("/mock", MockResponse)
+	http.HandleFunc("/auth", wrapHandlerWithAuth(VerifyCredentials))
+	http.HandleFunc("/mock", wrapHandlerWithAuth(MockResponse))
 }
 
-func wrapHandlerWithaAuth(handler http.HandlerFunc) http.HandlerFunc {
+func wrapHandlerWithAuth(handler http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		a := req.Header.Get("Authorization")
 
