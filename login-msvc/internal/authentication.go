@@ -20,14 +20,14 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		log.Fatal(err)
 	}
 
-	resp, respErr := http.Post("http://localhost:5000/mock" ,"application/json" , bytes.NewBuffer(body))
+	resp, respErr := http.Post(configs.VERIFY_ACCOUNT ,"application/json" , bytes.NewBuffer(body))
 
 	if respErr != nil {
 		log.Fatal(respErr)
 	}
 
 	t := time.Now()
-	e := t.Add(360 * time.Minute)
+	e := t.Add(configs.EXPIRY * time.Minute)
 	if resp.StatusCode == 200 {
 
 		t := &security.TokenClaims{
