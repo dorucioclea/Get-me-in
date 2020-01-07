@@ -1,32 +1,16 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
-      # specify the version
       - image: getmein1234/get-me-in
     steps:
-      # - checkout
-      - run: ls
-      # - run: go build -v ./account-service/cmd
+      - checkout
       
-    # working_directory: /go/src/github.com/ProjectReferral/Get-me-in
-    # steps:
-    #   - checkout
-    #   - run: go version
-#       - run:
-#           name: post checkout check
-#           command: |
-#             echo $PWD
-#             ls -aslh .
-#             ls -aslh ~
-#             ls -aslh ~/tmp
+      - setup_remote_docker:
+          docker_layer_caching: true
 
-      # specify any bash command here prefixed with `run: `
-      # - run: go get -v -t -d ./account-service/...
-      # - run: go build -v ./account-service/cmd
-
-      # - run: go get -v -t -d ./login-msvc/...
-      # - run: go build -v ./login-msvc/cmd
-
-      # - run: go get -v -t -d ./marketing-service/...
-      # - run: go build -v ./marketing-service/cmd
+      - run: |
+          TAG=dev
+          docker build -t getmein1234/get-me-in:$TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push CircleCI-Public/circleci-demo-docker:$TAG
