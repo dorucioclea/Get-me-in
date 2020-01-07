@@ -2,6 +2,7 @@ package internal
 
 import (
 	"github.com/ProjectReferral/Get-me-in/marketing-service/configs"
+	"github.com/ProjectReferral/Get-me-in/marketing-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"net/http"
@@ -20,5 +21,5 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 
 func CreateAdvert(w http.ResponseWriter, r *http.Request) {
 
-	dynamodb.CreateItem(w, DecodeToDynamoAttribute(w, r))
+	dynamodb.CreateItem(w, dynamodb.DecodeToDynamoAttribute(w, r, models.Advert{}))
 }
