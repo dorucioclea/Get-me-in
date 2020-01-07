@@ -1,7 +1,8 @@
 version: 2.1
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/golang:1.13
     steps:
       - checkout
       
