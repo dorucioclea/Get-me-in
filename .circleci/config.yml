@@ -1,8 +1,6 @@
 version: 2.1
 jobs:
   build:
-    docker:
-      - image: circleci/golang:1.13-alpine
     steps:
       - checkout
       
