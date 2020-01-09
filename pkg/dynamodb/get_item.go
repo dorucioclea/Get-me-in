@@ -12,7 +12,7 @@ func GetItem(w http.ResponseWriter, identifier string) (*dynamodb.GetItemOutput,
 	result, err := DynamoConnection.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(DynamoTable),
 		Key: map[string]*dynamodb.AttributeValue{
-			"email": {
+			SearchParam: {
 				S: aws.String(identifier),
 			},
 		},
@@ -20,8 +20,6 @@ func GetItem(w http.ResponseWriter, identifier string) (*dynamodb.GetItemOutput,
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Println(err.Error())
-		//return interface{}, false
 	}
 
 	return result, true

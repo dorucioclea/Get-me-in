@@ -57,3 +57,12 @@ func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interfa
 
 	return mapM
 }
+
+func GetParameterValue(w http.ResponseWriter, r io.ReadCloser, m interface{}) string{
+	bodyMap := DecodeToMap(w, r, m)
+	return StringFromMap(bodyMap, SearchParam)
+}
+
+func StringFromMap(m map[string]interface{}, p string) string{
+	return fmt.Sprintf("%v", m[p])
+}
