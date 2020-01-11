@@ -1,15 +1,27 @@
-version: 2.1
-jobs:
-  build:
-    docker:
-      - image: circleci/golang:1.13
-    steps:
-      - checkout
+# version: 2.1
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/golang:1.13
+#     steps:
+#       - checkout
       
-      - setup_remote_docker:
-          docker_layer_caching: true
+#       - setup_remote_docker:
+#           docker_layer_caching: true
 
-      - run: |
-          docker build -t getmein1234/get-me-in:$TAG .
-          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push getmein1234/get-me-in:$TAG
+#       - run: |
+#           docker build -t getmein1234/get-me-in:$TAG .
+#           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+#           docker push getmein1234/get-me-in:$TAG
+
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@0.0.2
+workflows:
+  build-and-deploy:
+    jobs:
+      - aws-ecr/build_and_push_image:
+          account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
+          repo: "${AWS_RESOURCE_NAME_PREFIX}"
+          region: ${AWS_DEFAULT_REGION}
+          tag: "${CIRCLE_SHA1}"
