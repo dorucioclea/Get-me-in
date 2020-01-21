@@ -12,10 +12,10 @@ func SetupEndpoints() *mux.Router{
 	_router.HandleFunc("/test", wrapHandlerWithAuth(TestFunc))
 	// connect to the db
 	_router.HandleFunc("/connect", wrapHandlerWithAuth(ConnectToInstance))
-	_router.HandleFunc("/account", wrapHandlerWithAuth(CreateAdvert)).Methods("PUT")
-	_router.HandleFunc("/account", wrapHandlerWithAuth(DeleteAdvert)).Methods("DELETE")
-	_router.HandleFunc("/account", wrapHandlerWithAuth(UpdateAdvert)).Methods("PATCH")
-	_router.HandleFunc("/account", wrapHandlerWithAuth(GetAdvert)).Methods("GET")
+	_router.HandleFunc("/advert", wrapHandlerWithAuth(CreateAdvert)).Methods("PUT")
+	_router.HandleFunc("/advert", wrapHandlerWithAuth(DeleteAdvert)).Methods("DELETE")
+	_router.HandleFunc("/advert", wrapHandlerWithAuth(UpdateAdvert)).Methods("PATCH")
+	_router.HandleFunc("/advert", wrapHandlerWithAuth(GetAdvert)).Methods("GET")
 
 	return _router
 }
