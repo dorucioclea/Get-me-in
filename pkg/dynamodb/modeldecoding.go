@@ -9,19 +9,24 @@ import (
 	"net/http"
 )
 
-func DecodeToDynamoAttribute(w http.ResponseWriter, r *http.Request, m interface{}) map[string]*dynamodb.AttributeValue{
+func DecodeToDynamoAttribute(r *http.Request, m interface{}) (map[string]*dynamodb.AttributeValue, error){
 
-	av, errM := dynamodbattribute.MarshalMap(DecodeToMap(w, r.Body, m))
+	bodyMap, err := DecodeToMap(r.Body, m)
 
-	if errM != nil {
-		http.Error(w, errM.Error(), http.StatusFailedDependency)
-		w.Write([]byte("424 - DynamoDB Marshalling Failed"))
+	if err != nil{
+		return nil, err
 	}
 
-	return av
+	av, errM := dynamodbattribute.MarshalMap(bodyMap)
+
+	if errM != nil {
+		return nil, errM
+	}
+
+	return av, nil
 }
 
-func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[string]interface{} {
+func DecodeToMap (b io.ReadCloser, m interface{}) (map[string]interface{}, error) {
 
 	// Try to decode th
 	//e request body into the struct. If there is an error,
@@ -29,7 +34,7 @@ func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[str
 	errJson := json.NewDecoder(b).Decode(&m)
 
 	if errJson != nil {
-		http.Error(w, errJson.Error(), http.StatusBadRequest)
+		return nil, errJson
 	}
 
 	mapM, ok := m.(map[string]interface{})
@@ -38,7 +43,7 @@ func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[str
 		fmt.Printf("ERROR: not a map-> %#v\n", m)
 	}
 
-	return mapM
+	return mapM, nil
 }
 
 func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interface{} {
@@ -58,9 +63,14 @@ func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interfa
 	return mapM
 }
 
-func GetParameterValue(w http.ResponseWriter, r io.ReadCloser, m interface{}) string{
-	bodyMap := DecodeToMap(w, r, m)
-	return StringFromMap(bodyMap, SearchParam)
+func GetParameterValue(r io.ReadCloser, m interface{}) (string,error){
+	bodyMap, err := DecodeToMap(r, m)
+
+	if err != nil{
+		return "", err
+	}
+
+	return StringFromMap(bodyMap, SearchParam), nil
 }
 
 func StringFromMap(m map[string]interface{}, p string) string{

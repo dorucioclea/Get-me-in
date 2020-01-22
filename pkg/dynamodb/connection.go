@@ -5,7 +5,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"net/http"
 )
 
 var DynamoTable string
@@ -13,7 +12,7 @@ var SearchParam string
 var DynamoConnection *dynamodb.DynamoDB
 var GenericModel interface{}
 
-func Connect(w http.ResponseWriter, c *credentials.Credentials, r string) {
+func Connect(c *credentials.Credentials, r string) error {
 
 	sess, err := session.NewSession(&aws.Config{
 		Region:      aws.String(r),
@@ -21,8 +20,10 @@ func Connect(w http.ResponseWriter, c *credentials.Credentials, r string) {
 	})
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return err
 	}
 
 	DynamoConnection = dynamodb.New(sess)
+
+	return nil
 }

@@ -3,10 +3,9 @@ package dynamodb
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"net/http"
 )
 
-func DeleteItem(w http.ResponseWriter, identifier string) bool {
+func DeleteItem(identifier string) error {
 
 	input := &dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
@@ -20,11 +19,8 @@ func DeleteItem(w http.ResponseWriter, identifier string) bool {
 	_, err := DynamoConnection.DeleteItem(input)
 
 	if err != nil {
-		w.WriteHeader(http.StatusFailedDependency)
-		w.Write([]byte("424 - DynamoDB DeleteItem Failed"))
-		return false
+		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
-	return true
+	return nil
 }

@@ -3,10 +3,9 @@ package dynamodb
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"net/http"
 )
 
-func CreateItem(w http.ResponseWriter, av map[string]*dynamodb.AttributeValue) {
+func CreateItem(av map[string]*dynamodb.AttributeValue) error{
 
 	// Adding item to database..
 	input := &dynamodb.PutItemInput{
@@ -17,9 +16,8 @@ func CreateItem(w http.ResponseWriter, av map[string]*dynamodb.AttributeValue) {
 	_, errM := DynamoConnection.PutItem(input)
 
 	if errM != nil {
-		http.Error(w, errM.Error(), http.StatusFailedDependency)
-		w.Write([]byte("424 - DynamoDB PuTItem Failed"))
+		return errM
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	return nil
 }

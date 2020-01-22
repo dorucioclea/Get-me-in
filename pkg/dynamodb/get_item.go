@@ -2,12 +2,11 @@ package dynamodb
 
 import (
 	"fmt"
-	"net/http"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-func GetItem(w http.ResponseWriter, identifier string) (*dynamodb.GetItemOutput, bool) {
+func GetItem(identifier string) (*dynamodb.GetItemOutput, error) {
 	fmt.Println(identifier, SearchParam, DynamoTable)
 	result, err := DynamoConnection.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(DynamoTable),
@@ -19,8 +18,8 @@ func GetItem(w http.ResponseWriter, identifier string) (*dynamodb.GetItemOutput,
 	})
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		return nil, err
 	}
 
-	return result, true
+	return result, nil
 }
