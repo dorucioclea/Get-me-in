@@ -9,7 +9,6 @@ import (
 )
 
 var DynamoTable string
-//search by specific item paramater
 var SearchParam string
 var DynamoConnection *dynamodb.DynamoDB
 var GenericModel interface{}
