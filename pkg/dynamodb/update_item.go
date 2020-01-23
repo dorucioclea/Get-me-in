@@ -5,7 +5,9 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-//Need to do
+/**
+TODO: not working as expected yet
+**/
 func UpdateItem(updatingField string, identifier string, updateVal string) (bool, error) {
 
 	input := &dynamodb.UpdateItemInput{

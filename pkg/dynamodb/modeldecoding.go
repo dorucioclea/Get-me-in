@@ -6,12 +6,14 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"io"
-	"net/http"
 )
 
-func DecodeToDynamoAttribute(r *http.Request, m interface{}) (map[string]*dynamodb.AttributeValue, error){
+/**
+* Convert type interface to dynamodb readable object
+**/
+func DecodeToDynamoAttribute(readBody io.ReadCloser, m interface{}) (map[string]*dynamodb.AttributeValue, error){
 
-	bodyMap, err := DecodeToMap(r.Body, m)
+	bodyMap, err := DecodeToMap(readBody, m)
 
 	if err != nil{
 		return nil, err
@@ -26,6 +28,9 @@ func DecodeToDynamoAttribute(r *http.Request, m interface{}) (map[string]*dynamo
 	return av, nil
 }
 
+/**
+* Convert the interface fields into a map
+**/
 func DecodeToMap (b io.ReadCloser, m interface{}) (map[string]interface{}, error) {
 
 	// Try to decode th
@@ -46,6 +51,9 @@ func DecodeToMap (b io.ReadCloser, m interface{}) (map[string]interface{}, error
 	return mapM, nil
 }
 
+/**
+* Model mapping of type interface to item from dynamodb
+**/
 func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interface{} {
 
 	err := dynamodbattribute.UnmarshalMap(result.Item, &m)
@@ -63,6 +71,9 @@ func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interfa
 	return mapM
 }
 
+/**
+* Get the specific value from the unique identifier
+**/
 func GetParameterValue(r io.ReadCloser, m interface{}) (string,error){
 	bodyMap, err := DecodeToMap(r, m)
 
@@ -73,6 +84,9 @@ func GetParameterValue(r io.ReadCloser, m interface{}) (string,error){
 	return StringFromMap(bodyMap, SearchParam), nil
 }
 
+/**
+* Convert a interface type to string
+**/
 func StringFromMap(m map[string]interface{}, p string) string{
 	return fmt.Sprintf("%v", m[p])
 }

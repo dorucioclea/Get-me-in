@@ -5,12 +5,13 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-func DeleteItem(identifier string) error {
+func DeleteItem(itemValue string) error {
 
+	// translate into a compatible object
 	input := &dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
 			SearchParam: {
-				S: aws.String(identifier),
+				S: aws.String(itemValue),
 			},
 		},
 		TableName: aws.String(DynamoTable),

@@ -7,15 +7,26 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
+/*** Values injected from main service that imports this library ***/
 var DynamoTable string
 var SearchParam string
-var DynamoConnection *dynamodb.DynamoDB
 var GenericModel interface{}
+/*******************************************************************/
 
-func Connect(c *credentials.Credentials, r string) error {
+var DynamoConnection *dynamodb.DynamoDB
+
+/*
+* Create a connection to DB and assign the session to DynamoConnection variable
+* DynamoConnection variable is shared by other resources(CRUD)
+*/
+func Connect(c *credentials.Credentials, region string) error {
+
+	if (DynamoTable == "" && SearchParam == "" && GenericModel == nil){
+		return CustomerError("Injected values are empty or nil")
+	}
 
 	sess, err := session.NewSession(&aws.Config{
-		Region:      aws.String(r),
+		Region:      aws.String(region),
 		Credentials: c,
 	})
 
