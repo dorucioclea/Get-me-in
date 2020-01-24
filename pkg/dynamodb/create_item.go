@@ -8,7 +8,7 @@ import (
 /*
 * Item created using AttributeValue which is decoded by modeldecoding
 */
-func CreateItem(av map[string]*dynamodb.AttributeValue) error{
+func CreateItem(av map[string]*dynamodb.AttributeValue) error {
 
 	// translate into a compatible object
 	input := &dynamodb.PutItemInput{
