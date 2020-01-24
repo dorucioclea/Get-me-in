@@ -18,42 +18,57 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 
 	c := credentials.NewSharedCredentials("", "default")
 
-	dynamodb.Connect(w, c, configs.EU_WEST_2)
+	err := dynamodb.Connect(c, configs.EU_WEST_2)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	w.WriteHeader(http.StatusOK)
 }
 
 func CreateAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	dynamodb.CreateItem(w, dynamodb.DecodeToDynamoAttribute(w, r, models.Advert{}))
+	dynamoAttr , errDecode := dynamodb.DecodeToDynamoAttribute(r.Body, models.Advert{})
+	HandleError(errDecode, w)
+
+	err := dynamodb.CreateItem(dynamoAttr)
+	HandleError(err, w)
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func DeleteAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	dynamodb.DeleteItem(w, dynamodb.GetParameterValue(w, r.Body, models.Advert{}))
+	//TODO: handle items not existent in db
+	errDelete := dynamodb.DeleteItem(ExtractValue(w, r))
+	HandleError(errDelete, w)
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func GetAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	result, status := dynamodb.GetItem(w, dynamodb.GetParameterValue(w, r.Body, models.Advert{}))
-	if status {
-		w.WriteHeader(http.StatusOK)
+	//TODO: handle items not existent in db
+	result, err := dynamodb.GetItem(ExtractValue(w, r))
+	HandleError(err, w)
 
-		b, err := json.Marshal(dynamodb.Unmarshal(result, models.Advert{}))
-		if err != nil {
-			log.Fatal(err)
-		}
-		w.Write([]byte(b))
-	}
+	b, err := json.Marshal(dynamodb.Unmarshal(result, models.Advert{}))
+	HandleError(err, w)
+
+	w.Write([]byte(b))
+	w.WriteHeader(http.StatusOK)
 }
 
 func UpdateAdvert(w http.ResponseWriter, r *http.Request) {
 
 	//TODO: Change to UpdateItem
-	dynamodb.CreateItem(w, 	dynamodb.DecodeToDynamoAttribute(w, r, models.Advert{}))
+	CreateAdvert(w,r)
 }
 
+func ExtractValue(w http.ResponseWriter, r *http.Request) string{
 
+	v, err := dynamodb.GetParameterValue(r.Body, models.Advert{})
+	HandleError(err, w)
+
+	return v
+}
