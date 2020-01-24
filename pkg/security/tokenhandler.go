@@ -5,31 +5,49 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-func GenerateToken() string{
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-	})
+func GenerateToken(claim *TokenClaims) string{
+
+	claims := &jwt.StandardClaims{
+		Audience:  claim.Audience,
+		ExpiresAt: claim.Expiration,
+		Id:        claim.Id,
+		IssuedAt:  claim.IssuedAt,
+		Issuer:    claim.Issuer,
+		NotBefore: claim.NotBefore,
+		Subject:   claim.Subject,
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign and get the complete encoded token as a string using the secret
+	// TODO: use key from env
 	tokenString, err := token.SignedString([]byte("this is the sample key"))
 
 	if err != nil {
 		return err.Error()
 	}
-	//debug
-	//fmt.Println(tokenString, err)
+
 	return tokenString
 }
 
-func VerifyToken(tokenString string)  bool {
+func VerifyToken(tokenString string) bool {
 
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	// Initialize a new instance of `Claims`
+	claims := &jwt.StandardClaims{}
+
+	// Parse the JWT string and store the result in `claims`.
+	// Note that we are passing the key in this method as well. This method will return an error
+	// if the token is invalid (if it has expired according to the expiry time we set on sign in),
+	// or if the signature does not match
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-
+		// TODO: use key from env
 		return []byte("this is the sample key"), nil
 	})
 
+	// token.valid checks for expiry date too on top of signature
 	if token.Valid && err == nil {
 		return true
 	}

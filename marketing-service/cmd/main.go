@@ -20,7 +20,7 @@ func loadEnvConfigs() {
 
 	fmt.Print("Running on ")
 
-	dynamodb.SearchParam = configs.FIND_BY_ACCOUNT
+	dynamodb.SearchParam = configs.FIND_BY_ID
 
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
