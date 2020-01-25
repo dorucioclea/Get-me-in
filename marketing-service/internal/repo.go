@@ -48,15 +48,15 @@ func DeleteAdvert(w http.ResponseWriter, r *http.Request) {
 
 func GetAdvert(w http.ResponseWriter, r *http.Request) {
 
-	//TODO: handle items not existent in db
 	result, err := dynamodb.GetItem(ExtractValue(w, r))
-	HandleError(err, w)
 
-	b, err := json.Marshal(dynamodb.Unmarshal(result, models.Advert{}))
-	HandleError(err, w)
+	if !HandleError(err, w) {
+		b, err := json.Marshal(dynamodb.Unmarshal(result, models.Advert{}))
+		HandleError(err, w)
 
-	w.Write([]byte(b))
-	w.WriteHeader(http.StatusOK)
+		w.Write([]byte(b))
+		w.WriteHeader(http.StatusOK)
+	}
 }
 
 func UpdateAdvert(w http.ResponseWriter, r *http.Request) {

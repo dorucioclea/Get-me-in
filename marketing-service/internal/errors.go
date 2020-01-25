@@ -16,8 +16,11 @@ func (e *errorString) Error() string {
 	return e.s
 }
 
-func HandleError(err error, w http.ResponseWriter){
+func HandleError(err error, w http.ResponseWriter) bool{
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusFailedDependency)
+		return true
 	}
+	return false
 }

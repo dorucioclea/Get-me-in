@@ -20,5 +20,9 @@ func GetItem(identifier string) (*dynamodb.GetItemOutput, error) {
 		return nil, err
 	}
 
+	if result.Item == nil {
+		return nil, CustomerError("Not Found")
+	}
+
 	return result, nil
 }
