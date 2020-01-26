@@ -1,25 +1,19 @@
 package internal
 
-import "net/http"
+import (
+	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
+	"net/http"
+)
 
-// New returns an error that formats as the given text.
-func CustomerError(text string) error {
-	return &errorString{text}
-}
-
-// errorString is a trivial implementation of error.
-type errorString struct {
-	s string
-}
-
-func (e *errorString) Error() string {
-	return e.s
-}
-
-func HandleError(err error, w http.ResponseWriter) bool{
+func HandleError(err error, w http.ResponseWriter, isCustom bool) bool{
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusFailedDependency)
+		if isCustom {
+			e := err.(*dynamodb.ErrorString)
+			http.Error(w, e.Reason, e.Code)
+			return true
+		}
+		http.Error(w, err.Error(), 400)
 		return true
 	}
 	return false
