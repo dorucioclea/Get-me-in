@@ -2,7 +2,7 @@ version: "2"
 
 services:
   marketing-service:
-    build: /marketing-service/.
+    build: ./marketing-service/.
     container_name: marketing-service
     ports:
       - "8888:8080"
