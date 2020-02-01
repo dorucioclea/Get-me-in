@@ -1,5 +1,7 @@
 FROM golang:1.8
 
+RUN rm -d /ProjectReferral/Get-me-in
+
 RUN mkdir -p /ProjectReferral/Get-me-in
 
 COPY . src/github.com/ProjectReferral/Get-me-in
