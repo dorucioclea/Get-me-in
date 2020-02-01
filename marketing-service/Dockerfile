@@ -1,6 +1,6 @@
 FROM golang:1.8
 
-RUN rm -d /ProjectReferral/Get-me-in
+RUN rm -d src/github.com
 
 RUN mkdir -p /ProjectReferral/Get-me-in
 
