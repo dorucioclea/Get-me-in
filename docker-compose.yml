@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  contacts:
+  marketing-service:
     build: /marketing-service/.
     container_name: marketing-service
     ports:

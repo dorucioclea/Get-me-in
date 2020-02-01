@@ -50,9 +50,9 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
             chmod +x /usr/local/bin/docker-compose
 
-      - run:
-          name: Build service
-          command: make
+      # - run:
+      #     name: Build service
+      #     command: make
 
       - run:
           name: Start container and verify it's working
@@ -63,7 +63,7 @@ jobs:
             # docker-compose will start 2 containers, the one with service will be named `contacts`
             # we start another container with curl in the same network as `contacts`, this way we have
             # all exposed ports from `contacts` available on `localhost` in this new container
-            docker run --network container:contacts \
+            docker run --network container:marketing-service \
               appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:8080
 
       - deploy:
