@@ -6,9 +6,9 @@ COPY . src/github.com/ProjectReferral/Get-me-in
 
 WORKDIR src/github.com/ProjectReferral/Get-me-in
 
-RUN go get -v -t -d ./account-service/...
-RUN go build -v ./account-service/cmd
+RUN go get -v -t -d ./marketing-service/...
+RUN go build -v ./marketing-service/cmd
 
-# RUN go run ./account-service/cmd/main.go
+# RUN go run ./marketing-service/cmd/main.go
 
-CMD ["/ProjectReferral/Get-me-in/account-service/cmd ."]
+CMD ["/ProjectReferral/Get-me-in/marketing-service/cmd ."]
