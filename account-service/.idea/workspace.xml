@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f08a71c-93e8-474c-97e9-e690d7f08685" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/modeldecoding.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/modeldecoding.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/repo.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/repo.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routes.go" afterDir="false" />
-    </list>
+    <list default="true" id="4f08a71c-93e8-474c-97e9-e690d7f08685" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +10,12 @@
   <component name="GOROOT" path="/usr/local/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-1546" />
+    <option name="y" value="51" />
+    <option name="width" value="1400" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectId" id="1VS1UGl0NztSEdlch0YI9ffwmvQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -34,6 +34,7 @@
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />

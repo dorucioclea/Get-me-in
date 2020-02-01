@@ -25,7 +25,8 @@
   <component name="GoLibraries">
     <option name="urls">
       <list>
-        <option value="file://$PROJECT_DIR$" />
+        <option value="file://$PROJECT_DIR$/.." />
+        <option value="file://$PROJECT_DIR$/../pkg" />
       </list>
     </option>
   </component>
@@ -40,6 +41,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
@@ -48,7 +50,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="goland.project.structure" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/build" />
   </component>
   <component name="RecentsManager">
@@ -64,7 +66,7 @@
       <go_parameters value="-i" />
       <sudo value="true" />
       <kind value="FILE" />
-      <filePath value="C:$PROJECT_DIR$/../../../../../../sramchande/go/src/ProjectReferral/cmd/main.go|M:/githubnew/github/Get-me-in/ProjectReferral/cmd/main.go" />
+      <filePath value="C:C:/sramchande/go/src/ProjectReferral/cmd/main.go|M:/githubnew/github/Get-me-in/ProjectReferral/cmd/main.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
@@ -146,6 +148,15 @@
     <state x="252" y="165" key="SettingsEditor/0.23.1680.969@0.23.1680.969" timestamp="1577816087559" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/internal/routes.go</url>
+          <line>2</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="GoApplicationRunConfiguration">
         <watch expression="req.Body" />
