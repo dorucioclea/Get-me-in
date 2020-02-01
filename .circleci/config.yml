@@ -43,7 +43,7 @@ jobs:
 
       # This should go into custom primary image, here's only for the sake of explanation
       # This should go into custom primary image, here's only for the sake of explanation
-      - 2run:
+      - run:
           name: Install Docker Compose
           command: |
             set -x
