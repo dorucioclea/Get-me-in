@@ -5,7 +5,7 @@
 #     steps:
 #       - checkout
       
-#       - setup_remote_docker:
+#       
 
 #       - run: |
 #           docker build -t getmein1234/get-me-in:$TAG .
@@ -30,15 +30,16 @@ jobs:
   build:
     docker:
       # using custom image, see .circleci/images/primary/Dockerfile
+      - image: circleci/cci-demo-docker-primary:0.0.2
       - image: circleci/golang:1.13
-          docker_layer_caching: true
 
     working_directory: /go/src/github.com/ProjectReferral/Get-me-in
 
     steps:
       - checkout
 
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
 
       # This should go into custom primary image, here's only for the sake of explanation
       # This should go into custom primary image, here's only for the sake of explanation
