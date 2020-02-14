@@ -7,8 +7,6 @@ import (
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"log"
-	"io"
 	"net/http"
 )
 
@@ -18,68 +16,109 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 
 func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 	c := credentials.NewSharedCredentials("", "default")
-	dynamodb.Connect(w, c, configs.EU_WEST_2)
+
+	err := dynamodb.Connect(c, configs.EU_WEST_2)
+
+	if err != nil {
+		e := err.(*dynamodb.ErrorString)
+		http.Error(w, e.Reason, e.Code)
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 // Tested & Working
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	dynamodb.CreateItem(w, dynamodb.DecodeToDynamoAttribute(w, r, models.User{}))
+	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttribute(r.Body, models.User{})
 
+	if !HandleError(errDecode, w, false){
+
+		err := dynamodb.CreateItem(dynamoAttr)
+
+		if !HandleError(err, w, false){
+			w.WriteHeader(http.StatusOK)
+		}
+	}
 }
 
 // Tested & Working
 func GetUser(w http.ResponseWriter, r *http.Request) {
-	result, status := dynamodb.GetItem(w, Email(w, r.Body))
-	if status {
-		w.WriteHeader(http.StatusOK)
+	result, err := dynamodb.GetItem(ExtractValue(w, r))
 
+	if !HandleError(err, w, true) {
 		b, err := json.Marshal(dynamodb.Unmarshal(result, models.User{}))
-		if err != nil {
-			log.Fatal(err)
+
+		if !HandleError(err, w, false){
+
+			w.Write([]byte(b))
+			w.WriteHeader(http.StatusOK)
 		}
-		w.Write([]byte(b))
 	}
 }
 
 // Tested & Working
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	status := dynamodb.DeleteItem(w, Email(w, r.Body))
-	if status {
-		w.WriteHeader(http.StatusOK)
-	}
-}
+	extractValue := ExtractValue(w, r)
 
-// Temporary
-func UpdateUser(w http.ResponseWriter, r *http.Request) {
-	dynamodb.CreateItem(w, dynamodb.DecodeToDynamoAttribute(w, r, models.User{}))
-}
+	errDelete := dynamodb.DeleteItem(extractValue)
 
-// Tested & Working
-func Login(w http.ResponseWriter, r *http.Request) {
+	if !HandleError(errDelete, w, false) {
 
-	bodyMap := dynamodb.DecodeToMap(w, r.Body, models.Credentials{})
-	bodyEmail := StringFromMap(bodyMap, configs.QUERY_PARAM)
-	bodyPassword := StringFromMap(bodyMap, configs.PW)
+		//Check item still exists
+		result, err := dynamodb.GetItem(extractValue)
 
-	result, found := dynamodb.GetItem(w, bodyEmail)
-
-	u := dynamodb.Unmarshal(result, models.Credentials{})
-	dbPassword := StringFromMap(u, configs.PW)
-
-	if found {
-		if bodyPassword == dbPassword {
-			w.WriteHeader(http.StatusAccepted)
+		//error thrown, record not found
+		if !HandleError(err, w, true) {
+			http.Error(w, result.GoString(), 302)
 		}
-		w.WriteHeader(http.StatusUnauthorized)
 	}
-	w.WriteHeader(http.StatusNoContent)
 }
 
-func Email(w http.ResponseWriter, r io.ReadCloser) string{
-	bodyMap := dynamodb.DecodeToMap(w, r, models.Credentials{})
-	return StringFromMap(bodyMap, configs.QUERY_PARAM)
+func UpdateUser(w http.ResponseWriter, r *http.Request) {
+
+	//TODO: Change to UpdateItem
+	CreateUser(w,r)}
+
+//TODO: Refactor
+func Login(w http.ResponseWriter, r *http.Request) {
+	//
+	//bodyMap,err := dynamodb.DecodeToMap(r.Body, models.Credentials{})
+	//
+	//if err != nil{
+	//	return nil, err
+	//}
+	//
+	//av, errM := dynamodbattribute.MarshalMap(bodyMap)
+	//
+	//
+	//
+	//
+	//
+	//bodyEmail := StringFromMap(bodyMap, configs.QUERY_PARAM)
+	//bodyPassword := StringFromMap(bodyMap, configs.PW)
+	//
+	//result, found := dynamodb.GetItem(w, bodyEmail)
+	//
+	//u := dynamodb.Unmarshal(result, models.Credentials{})
+	//dbPassword := StringFromMap(u, configs.PW)
+	//
+	//if found {
+	//	if bodyPassword == dbPassword {
+	//		w.WriteHeader(http.StatusAccepted)
+	//	}
+	//	w.WriteHeader(http.StatusUnauthorized)
+	//}
+	//w.WriteHeader(http.StatusNoContent)
 }
 
 func StringFromMap(m map[string]interface{}, p string) string{
 	return fmt.Sprintf("%v", m[p])
+}
+
+func ExtractValue(w http.ResponseWriter, r *http.Request) string{
+
+	v, err := dynamodb.GetParameterValue(r.Body, models.User{})
+	HandleError(err, w, false)
+
+	return v
 }
