@@ -20,6 +20,7 @@ func GenerateToken(claim *TokenClaims) string{
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign and get the complete encoded token as a string using the secret
+	// TODO: use key from env
 	tokenString, err := token.SignedString([]byte("this is the sample key"))
 
 	if err != nil {
@@ -29,7 +30,7 @@ func GenerateToken(claim *TokenClaims) string{
 	return tokenString
 }
 
-func VerifyToken(tokenString string)  bool {
+func VerifyToken(tokenString string) bool {
 
 	// Initialize a new instance of `Claims`
 	claims := &jwt.StandardClaims{}
@@ -42,9 +43,11 @@ func VerifyToken(tokenString string)  bool {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
+		// TODO: use key from env
 		return []byte("this is the sample key"), nil
 	})
 
+	// token.valid checks for expiry date too on top of signature
 	if token.Valid && err == nil {
 		return true
 	}

@@ -1,26 +1,32 @@
 package dynamodb
 
 import (
-	"fmt"
-	"net/http"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"net/http"
 )
 
-func GetItem(w http.ResponseWriter, identifier string) (*dynamodb.GetItemOutput, bool) {
-	fmt.Println(identifier, SearchParam, DynamoTable)
+func GetItem(itemValue string) (*dynamodb.GetItemOutput, error) {
+
 	result, err := DynamoConnection.GetItem(&dynamodb.GetItemInput{
 		TableName: aws.String(DynamoTable),
 		Key: map[string]*dynamodb.AttributeValue{
 			SearchParam: {
-				S: aws.String(identifier),
+				S: aws.String(itemValue),
 			},
 		},
 	})
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		return nil, err
 	}
 
-	return result, true
+	if result.Item == nil {
+		return nil, &ErrorString{
+			Reason: http.StatusText(http.StatusNotFound),
+			Code:   http.StatusNotFound,
+		}
+	}
+
+	return result, nil
 }

@@ -3,11 +3,12 @@ package dynamodb
 import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"net/http"
 )
 
-//Need to do
-func UpdateItem(w http.ResponseWriter, updatingField string, identifier string, updateVal string) bool {
+/**
+TODO: not working as expected yet
+**/
+func UpdateItem(updatingField string, identifier string, updateVal string) (bool, error) {
 
 	input := &dynamodb.UpdateItemInput{
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
@@ -28,8 +29,8 @@ func UpdateItem(w http.ResponseWriter, updatingField string, identifier string, 
 
 	_, err := DynamoConnection.UpdateItem(input)
 	if err != nil {
-		return false
+		return false, err
 	}
 	
-	return true
+	return true, nil
 }
