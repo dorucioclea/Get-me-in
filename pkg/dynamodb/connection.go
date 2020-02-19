@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"net/http"
 )
 
 /*** Values injected from main service that imports this library ***/
@@ -21,8 +22,11 @@ var DynamoConnection *dynamodb.DynamoDB
 */
 func Connect(c *credentials.Credentials, region string) error {
 
-	if (DynamoTable == "" && SearchParam == "" && GenericModel == nil){
-		return CustomerError("Injected values are empty or nil")
+	if DynamoTable == "" && SearchParam == "" && GenericModel == nil{
+		return &ErrorString{
+			Reason: "Injected values are empty or nil",
+			Code:   http.StatusBadRequest,
+		}
 	}
 
 	sess, err := session.NewSession(&aws.Config{

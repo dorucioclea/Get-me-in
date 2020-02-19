@@ -6,7 +6,6 @@ import (
 	"github.com/ProjectReferral/Get-me-in/marketing-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"log"
 	"net/http"
 )
 
@@ -18,42 +17,73 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 
 	c := credentials.NewSharedCredentials("", "default")
 
-	dynamodb.Connect(w, c, configs.EU_WEST_2)
+	err := dynamodb.Connect(c, configs.EU_WEST_2)
+
+	if err != nil {
+		e := err.(*dynamodb.ErrorString)
+		http.Error(w, e.Reason, e.Code)
+	}
 
 	w.WriteHeader(http.StatusOK)
 }
 
 func CreateAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	dynamodb.CreateItem(w, dynamodb.DecodeToDynamoAttribute(w, r, models.Advert{}))
+	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttribute(r.Body, models.Advert{})
+
+	if !HandleError(errDecode, w, false){
+
+		err := dynamodb.CreateItem(dynamoAttr)
+
+		if !HandleError(err, w, false){
+			w.WriteHeader(http.StatusOK)
+		}
+	}
 }
 
 func DeleteAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	dynamodb.DeleteItem(w, dynamodb.GetParameterValue(w, r.Body, models.Advert{}))
+	extractValue := ExtractValue(w, r)
+
+	errDelete := dynamodb.DeleteItem(extractValue)
+
+	if !HandleError(errDelete, w, false) {
+
+		//Check item still exists
+		result, err := dynamodb.GetItem(extractValue)
+
+		//error thrown, record not found
+		if !HandleError(err, w, true) {
+			http.Error(w, result.GoString(), 302)
+		}
+	}
 }
 
 func GetAdvert(w http.ResponseWriter, r *http.Request) {
 
-	// TODO: responses handled by library?
-	result, status := dynamodb.GetItem(w, dynamodb.GetParameterValue(w, r.Body, models.Advert{}))
-	if status {
-		w.WriteHeader(http.StatusOK)
+	result, err := dynamodb.GetItem(ExtractValue(w, r))
 
+	if !HandleError(err, w, true) {
 		b, err := json.Marshal(dynamodb.Unmarshal(result, models.Advert{}))
-		if err != nil {
-			log.Fatal(err)
+
+		if !HandleError(err, w, false){
+
+			w.Write([]byte(b))
+			w.WriteHeader(http.StatusOK)
 		}
-		w.Write([]byte(b))
 	}
 }
 
 func UpdateAdvert(w http.ResponseWriter, r *http.Request) {
 
 	//TODO: Change to UpdateItem
-	dynamodb.CreateItem(w, 	dynamodb.DecodeToDynamoAttribute(w, r, models.Advert{}))
+	CreateAdvert(w,r)
 }
 
+func ExtractValue(w http.ResponseWriter, r *http.Request) string{
 
+	v, err := dynamodb.GetParameterValue(r.Body, models.Advert{})
+	HandleError(err, w, false)
+
+	return v
+}
