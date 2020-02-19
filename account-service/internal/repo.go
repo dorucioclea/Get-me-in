@@ -27,7 +27,6 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-// Tested & Working
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttribute(r.Body, models.User{})
 
@@ -41,7 +40,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Tested & Working
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	result, err := dynamodb.GetItem(ExtractValue(w, r))
 
@@ -56,7 +54,6 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Tested & Working
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	extractValue := ExtractValue(w, r)
 
@@ -79,36 +76,34 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	//TODO: Change to UpdateItem
 	CreateUser(w,r)}
 
-//TODO: Refactor
 func Login(w http.ResponseWriter, r *http.Request) {
-	//
-	//bodyMap,err := dynamodb.DecodeToMap(r.Body, models.Credentials{})
-	//
-	//if err != nil{
-	//	return nil, err
-	//}
-	//
-	//av, errM := dynamodbattribute.MarshalMap(bodyMap)
-	//
-	//
-	//
-	//
-	//
-	//bodyEmail := StringFromMap(bodyMap, configs.QUERY_PARAM)
-	//bodyPassword := StringFromMap(bodyMap, configs.PW)
-	//
-	//result, found := dynamodb.GetItem(w, bodyEmail)
-	//
-	//u := dynamodb.Unmarshal(result, models.Credentials{})
-	//dbPassword := StringFromMap(u, configs.PW)
-	//
-	//if found {
-	//	if bodyPassword == dbPassword {
-	//		w.WriteHeader(http.StatusAccepted)
-	//	}
-	//	w.WriteHeader(http.StatusUnauthorized)
-	//}
-	//w.WriteHeader(http.StatusNoContent)
+
+	// convert the response body into a map
+	bodyMap,err := dynamodb.DecodeToMap(r.Body, models.Credentials{})
+
+	if err != nil{
+		HandleError(err, w, false)
+	}
+
+	//get the values
+	emailFromBody := StringFromMap(bodyMap, configs.UNIQUE_IDENTIFIER)
+	passwordFromBody := StringFromMap(bodyMap, configs.PW)
+
+	result, error := dynamodb.GetItem(emailFromBody)
+
+	// if there is an error or record not found
+	if error != nil{
+		HandleError(error, w, true)
+	}
+
+	u := dynamodb.Unmarshal(result, models.Credentials{})
+	passwordFromDB := StringFromMap(u, configs.PW)
+
+	if passwordFromBody == passwordFromDB {
+		w.WriteHeader(http.StatusAccepted)
+	}
+
+	w.WriteHeader(http.StatusUnauthorized)
 }
 
 func StringFromMap(m map[string]interface{}, p string) string{
