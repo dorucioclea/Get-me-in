@@ -1,20 +1,17 @@
 package dynamodb
 
 import (
-	"net/http"
-	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 )
 
-func DeleteItem(w http.ResponseWriter, identifier string) bool {
+func DeleteItem(itemValue string) error {
 
-	fmt.Println(SearchParam)
-
+	// translate into a compatible object
 	input := &dynamodb.DeleteItemInput{
 		Key: map[string]*dynamodb.AttributeValue{
-			"email": {
-				S: aws.String(identifier),
+			SearchParam: {
+				S: aws.String(itemValue),
 			},
 		},
 		TableName: aws.String(DynamoTable),
@@ -23,11 +20,8 @@ func DeleteItem(w http.ResponseWriter, identifier string) bool {
 	_, err := DynamoConnection.DeleteItem(input)
 
 	if err != nil {
-		w.WriteHeader(http.StatusFailedDependency)
-		w.Write([]byte("424 - DynamoDB DeleteItem Failed"))
-		return false
+		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
-	return true
+	return nil
 }

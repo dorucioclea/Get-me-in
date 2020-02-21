@@ -6,22 +6,32 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"io"
-	"net/http"
 )
 
-func DecodeToDynamoAttribute(w http.ResponseWriter, r *http.Request, m interface{}) map[string]*dynamodb.AttributeValue{
+/**
+* Convert type interface to dynamodb readable object
+**/
+func DecodeToDynamoAttribute(readBody io.ReadCloser, m interface{}) (map[string]*dynamodb.AttributeValue, error){
 
-	av, errM := dynamodbattribute.MarshalMap(DecodeToMap(w, r.Body, m))
+	bodyMap, err := DecodeToMap(readBody, m)
 
-	if errM != nil {
-		http.Error(w, errM.Error(), http.StatusFailedDependency)
-		w.Write([]byte("424 - DynamoDB Marshalling Failed"))
+	if err != nil{
+		return nil, err
 	}
 
-	return av
+	av, errM := dynamodbattribute.MarshalMap(bodyMap)
+
+	if errM != nil {
+		return nil, errM
+	}
+
+	return av, nil
 }
 
-func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[string]interface{} {
+/**
+* Convert the interface fields into a map
+**/
+func DecodeToMap (b io.ReadCloser, m interface{}) (map[string]interface{}, error) {
 
 	// Try to decode th
 	//e request body into the struct. If there is an error,
@@ -29,7 +39,7 @@ func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[str
 	errJson := json.NewDecoder(b).Decode(&m)
 
 	if errJson != nil {
-		http.Error(w, errJson.Error(), http.StatusBadRequest)
+		return nil, errJson
 	}
 
 	mapM, ok := m.(map[string]interface{})
@@ -38,9 +48,12 @@ func DecodeToMap (w http.ResponseWriter, b io.ReadCloser, m interface{}) map[str
 		fmt.Printf("ERROR: not a map-> %#v\n", m)
 	}
 
-	return mapM
+	return mapM, nil
 }
 
+/**
+* Model mapping of type interface to item from dynamodb
+**/
 func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interface{} {
 
 	err := dynamodbattribute.UnmarshalMap(result.Item, &m)
@@ -56,4 +69,24 @@ func Unmarshal(result *dynamodb.GetItemOutput, m interface{}) map[string]interfa
 	}
 
 	return mapM
+}
+
+/**
+* Get the specific value from the unique identifier
+**/
+func GetParameterValue(r io.ReadCloser, m interface{}) (string,error){
+	bodyMap, err := DecodeToMap(r, m)
+
+	if err != nil{
+		return "", err
+	}
+
+	return StringFromMap(bodyMap, SearchParam), nil
+}
+
+/**
+* Convert a interface type to string
+**/
+func StringFromMap(m map[string]interface{}, p string) string{
+	return fmt.Sprintf("%v", m[p])
 }
