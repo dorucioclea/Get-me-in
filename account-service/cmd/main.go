@@ -17,7 +17,9 @@ func main() {
 //TODO: improve workflow
 func loadEnvConfigs() {
 
-	fmt.Print("Running on ")
+	var env = ""
+
+	fmt.Printf("Running on %s \n", configs.PORT)
 
 	dynamodb.SearchParam = configs.UNIQUE_IDENTIFIER
 	dynamodb.GenericModel = models.User{}
@@ -25,16 +27,14 @@ func loadEnvConfigs() {
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
 		dynamodb.DynamoTable = "dev-users"
-		fmt.Println(env)
 	case "UAT":
 		dynamodb.DynamoTable = "uat-users"
-		fmt.Println(env)
 	case "PROD":
 		dynamodb.DynamoTable = "prod-users"
-		fmt.Println(env)
-
 	default:
 		dynamodb.DynamoTable = "dev-users"
-		fmt.Println(env)
 	}
+
+	fmt.Println("Environment:" + env)
+
 }
