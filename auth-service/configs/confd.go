@@ -2,7 +2,7 @@ package configs
 
 const (
 	PORT = ":5000"
-	VERIFY_ACCOUNT = "http://www.localhost:5001/account/verify"
+	LOGIN_ENDPOINT = "http://localhost:5000/mock"
 	API_VERSION = "1.0.0"
 	SERVICE_ID = "auth"
 	SUBJECT = "Authentication"
