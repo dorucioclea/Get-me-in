@@ -1,10 +1,10 @@
 package internal
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/auth-service/configs"
+	"github.com/ProjectReferral/Get-me-in/pkg/http_lib"
 	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"io/ioutil"
 	"net/http"
@@ -19,12 +19,24 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 	}
 
-	post, err := http.NewRequest("POST", configs.LOGIN_ENDPOINT, bytes.NewBuffer(body))
 
-	post.Header.Set("Authorization", req.Header.Get("Authorization"))
+	//post, err := http.NewRequest("POST", configs.LOGIN_ENDPOINT, bytes.NewBuffer(body))
+	//
+	//post.Header.Set("Authorization", req.Header.Get("Authorization"))
+	//
+	//client := &http.Client{}
+	//resp, err := client.Do(post)
+	//
+	//if err != nil {
+	//	http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+	//}
+	//
+	//if resp.StatusCode != 200 {
+	//	http.Error(w, http.StatusText(401), http.StatusUnauthorized)
+	//}
 
-	client := &http.Client{}
-	resp, err := client.Do(post)
+	m := map[string]string{"Authorization": req.Header.Get("Authorization")}
+	resp, err := http_lib.Post(configs.LOGIN_ENDPOINT, body, m)
 
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
@@ -48,7 +60,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Println(token)
 
-	m := security.TokenResponse{
+	tr := security.TokenResponse{
 		AccessToken:  security.GenerateToken(token),
 		TokenType:    configs.BEARER,
 		ExpiresIn:    configs.EXPIRY,
@@ -61,7 +73,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		fmt.Sprintf(err.Error())
 	}
 
-	security.VerifyToken(m.AccessToken)
+	security.VerifyToken(tr.AccessToken)
 
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(b))
