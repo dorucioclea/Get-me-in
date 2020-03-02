@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/auth-service/configs"
-	"github.com/ProjectReferral/Get-me-in/pkg/http_lib"
+	request "github.com/ProjectReferral/Get-me-in/pkg/http_lib"
 	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"io/ioutil"
 	"net/http"
@@ -19,31 +19,18 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 	}
 
-
-	//post, err := http.NewRequest("POST", configs.LOGIN_ENDPOINT, bytes.NewBuffer(body))
-	//
-	//post.Header.Set("Authorization", req.Header.Get("Authorization"))
-	//
-	//client := &http.Client{}
-	//resp, err := client.Do(post)
-	//
-	//if err != nil {
-	//	http.Error(w, http.StatusText(500), http.StatusInternalServerError)
-	//}
-	//
-	//if resp.StatusCode != 200 {
-	//	http.Error(w, http.StatusText(401), http.StatusUnauthorized)
-	//}
-
 	m := map[string]string{"Authorization": req.Header.Get("Authorization")}
-	resp, err := http_lib.Post(configs.LOGIN_ENDPOINT, body, m)
+	resp, err := request.Get(configs.LOGIN_ENDPOINT, body, m)
 
 	if err != nil {
-		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		e := err.(*request.ErrorString)
+		http.Error(w, e.Reason, e.Code)
+		return
 	}
 
 	if resp.StatusCode != 200 {
 		http.Error(w, http.StatusText(401), http.StatusUnauthorized)
+		return
 	}
 
 	t := time.Now()
@@ -67,14 +54,13 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		RefreshToken: "N/A",
 	}
 
-	b, err := json.Marshal(m)
+	b, err := json.Marshal(tr)
 
 	if err != nil {
 		fmt.Sprintf(err.Error())
 	}
 
-	security.VerifyToken(tr.AccessToken)
-
+	//security.VerifyToken(tr.AccessToken)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(b))
 }
