@@ -33,6 +33,20 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	token := IssueToken(req)
+
+	b, err := json.Marshal(token)
+
+	if err != nil {
+		fmt.Sprintf(err.Error())
+	}
+
+	//security.VerifyToken(tr.AccessToken)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(b))
+}
+
+func IssueToken(req *http.Request) security.TokenResponse{
 	t := time.Now()
 	e := t.Add(configs.EXPIRY * time.Minute)
 
@@ -43,7 +57,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		IssuedAt:   t.Unix(),
 		Expiration: e.Unix(),
 		NotBefore:  t.Unix(),
-		Id:         "a",
+		Id:         req.Header.Get("Id"),
 	}
 	fmt.Println(token)
 
@@ -54,15 +68,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		RefreshToken: "N/A",
 	}
 
-	b, err := json.Marshal(tr)
-
-	if err != nil {
-		fmt.Sprintf(err.Error())
-	}
-
-	//security.VerifyToken(tr.AccessToken)
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(b))
+	return tr
 }
 
 func MockResponse(w http.ResponseWriter, req *http.Request) {
