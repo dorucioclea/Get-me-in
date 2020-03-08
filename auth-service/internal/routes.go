@@ -9,8 +9,7 @@ import (
 	"net/http"
 )
 
-func
-SetupEndpoints(){
+func SetupEndpoints(){
 	_router := mux.NewRouter()
 
 	_router.HandleFunc("/auth", wrapHandlerWithAuth(VerifyCredentials)).Methods("GET")
