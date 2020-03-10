@@ -16,16 +16,18 @@ func SendToQ(routingKey string, body string, qName string, exchange string){
 	defer ch.Close()
 
 	failOnError(err, "Failed to declare a queue")
-
-	err = ch.Publish(
-		exchange,     // exchange
-		routingKey, // routing key
-		false,  // mandatory
-		false,  // immediate
-		amqp.Publishing {
-			ContentType: "text/plain",
-			Body:        []byte(body),
-		})
+	
+	for i:=0; i < 5; i++ {
+		err = ch.Publish(
+			exchange,     // exchange
+			routingKey, // routing key
+			false,  // mandatory
+			false,  // immediate
+			amqp.Publishing {
+				ContentType: "text/plain",
+				Body:        []byte(body),
+			})
+	}
 
 	failOnError(err, "Failed to publish a message")
 }

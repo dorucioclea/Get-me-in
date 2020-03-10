@@ -14,5 +14,13 @@ func main() {
 	fmt.Println(configs.BrokerUrl)
 
 	internal.SendToQ("test", "custom message from GOlang", configs.TESTQ, "test.direct")
+
+
+	forever := make(chan string)
+
 	internal.ReceiveFromQ(configs.TESTQ)
+	internal.ReceiveFromQ(configs.TESTQ1)
+
+
+	<-forever
 }
