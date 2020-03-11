@@ -13,7 +13,7 @@ func main() {
 
 	fmt.Println(configs.BrokerUrl)
 
-	internal.SendToQ("test", "custom message from GOlang", configs.TESTQ, "test.direct")
+	internal.SendTest("test", "custom message from GOlang", configs.TESTQ, "test.direct")
 
 
 	forever := make(chan string)
