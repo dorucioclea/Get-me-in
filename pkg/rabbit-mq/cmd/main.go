@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/ProjectReferral/Get-me-in/pkg/rabbit-mq"
 	"github.com/ProjectReferral/Get-me-in/pkg/rabbit-mq/configs"
-	"github.com/ProjectReferral/Get-me-in/pkg/rabbit-mq/internal"
 	"os"
 )
 
@@ -13,13 +13,13 @@ func main() {
 
 	fmt.Println(configs.BrokerUrl)
 
-	internal.SendTest("test", "custom message from GOlang", configs.TESTQ, "test.direct")
+	rabbit_mq.SendTest("test", "custom message from GOlang", configs.TESTQ, "test.direct")
 
 
 	forever := make(chan string)
 
-	internal.ReceiveFromQ(configs.TESTQ)
-	internal.ReceiveFromQ(configs.TESTQ1)
+	rabbit_mq.ReceiveFromQ(configs.TESTQ)
+	rabbit_mq.ReceiveFromQ(configs.TESTQ1)
 
 
 	<-forever

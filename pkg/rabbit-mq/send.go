@@ -1,4 +1,4 @@
-package internal
+package rabbit_mq
 
 import (
 	"crypto/rand"
