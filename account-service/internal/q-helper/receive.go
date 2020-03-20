@@ -1,15 +1,15 @@
-package internal
+package q_helper
 
 import (
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/pkg/rabbit-mq/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/configs"
 	"github.com/streadway/amqp"
 	"log"
 )
 
-func ReceiveFromQ(qName string){
+func ReceiveFromQ(){
 	conn, err := amqp.Dial(configs.BrokerUrl)
-	log.Printf("Listening on Q: %s", qName)
+	log.Printf("Listening on Q: %s", configs.Q_POSTUSER)
 
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
@@ -20,8 +20,8 @@ func ReceiveFromQ(qName string){
 
 	failOnError(err, "Failed to declare a queue")
 
-	msgs, err := ch.Consume(
-		qName, // queue
+	msgsCreateUser, err := ch.Consume(
+		configs.Q_POSTUSER, // queue
 		"",     // consumer
 		true,   // auto-ack, TODO: manual ack
 		false,  // exclusive
@@ -30,8 +30,8 @@ func ReceiveFromQ(qName string){
 		nil,    // args
 	)
 
-	msgsClone, err := ch.Consume(
-		configs.TESTQ1, // queue
+	msgsGetUser, err := ch.Consume(
+		configs.Q_GETUSER, // queue
 		"",     // consumer
 		true,   // auto-ack, TODO: manual ack
 		false,  // exclusive
@@ -46,19 +46,19 @@ func ReceiveFromQ(qName string){
 	forever := make(chan string)
 
 	go func() {
-		for d := range msgs {
+		for d := range msgsCreateUser {
 			log.Printf("Received a message: %s - %s", d.Body,d.CorrelationId)
 
 			//ProcessMessage(1)
-			SendToQ("test.reply", "Reply: processed", "queue.test.reply", "test.direct")
+			SendToQ("user.create.reply", "Reply: processed", "create_advert_reply", "account")
 		}
 	}()
 
 	go func() {
-		for d := range msgsClone {
+		for d := range msgsGetUser {
 			log.Printf("Received a message: %s - %s", d.Body,d.CorrelationId)
 			//	ProcessMessage(2)
-			SendToQ("test.reply", "Reply: processed", "queue.test.reply", "test.direct")
+			SendToQ("user.read.reply", "Reply: processed", "read_advert_reply", "account")
 		}
 	}()
 

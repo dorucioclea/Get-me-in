@@ -2,16 +2,20 @@ package main
 
 import (
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
+	q_helper "github.com/ProjectReferral/Get-me-in/account-service/internal/q-helper"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
 )
 
 func main() {
 	loadEnvConfigs()
-	internal.SetupEndpoints()
+	//internal.SetupEndpoints()
+
+
+	q_helper.ReceiveFromQ()
+
 }
 
 //TODO: improve workflow
@@ -21,6 +25,7 @@ func loadEnvConfigs() {
 
 	fmt.Printf("Running on %s \n", configs.PORT)
 
+	configs.BrokerUrl = os.Getenv("broker_url")
 	dynamodb.SearchParam = configs.UNIQUE_IDENTIFIER
 	dynamodb.GenericModel = models.User{}
 
