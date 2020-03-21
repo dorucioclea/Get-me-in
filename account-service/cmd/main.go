@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	q_helper "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
-	q_helper "github.com/ProjectReferral/Get-me-in/account-service/internal/q-helper"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
 )
