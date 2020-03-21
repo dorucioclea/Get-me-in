@@ -28,6 +28,25 @@ func DecodeToDynamoAttribute(readBody io.ReadCloser, m interface{}) (map[string]
 	return av, nil
 }
 
+func DecodeToDynamoAttributeFromByte(jsonData []byte, m interface{}) (map[string]*dynamodb.AttributeValue, error){
+
+	err := json.Unmarshal(jsonData, &m)
+
+	if err != nil {
+		panic(err)
+	}
+
+	av, errM := dynamodbattribute.MarshalMap(m)
+
+	if errM != nil {
+		return nil, errM
+	}
+
+	return av, nil
+}
+
+
+
 /**
 * Convert the interface fields into a map
 **/

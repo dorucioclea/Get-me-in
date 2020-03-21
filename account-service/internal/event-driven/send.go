@@ -1,4 +1,4 @@
-package q_helper
+package event_driven
 
 import (
 	"crypto/rand"
@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-func SendToQ(routingKey string, body string, qName string, exchange string){
+func SendToQ(routingKey string, body string, exchange string, correlationId string){
 	conn, err := amqp.Dial(configs.BrokerUrl)
 
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -28,8 +28,11 @@ func SendToQ(routingKey string, body string, qName string, exchange string){
 		amqp.Publishing {
 			ContentType: "text/plain",
 			Body:        []byte(body),
+			CorrelationId: correlationId,
 		})
 
+
+	log.Println("Message sent:" + body)
 	failOnError(err, "Failed to publish a message")
 }
 

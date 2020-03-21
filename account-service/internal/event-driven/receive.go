@@ -1,8 +1,11 @@
-package q_helper
+package event_driven
 
 import (
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
+	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/streadway/amqp"
 	"log"
 )
@@ -50,7 +53,9 @@ func ReceiveFromQ(){
 			log.Printf("Received a message: %s - %s", d.Body,d.CorrelationId)
 
 			//ProcessMessage(1)
-			SendToQ("user.create.reply", "Reply: processed", "create_advert_reply", "account")
+			if CreateUser(d.Body, d.CorrelationId) {
+				SendToQ("user.create.reply", "Reply: User created for "+d.CorrelationId,  "account", d.CorrelationId)
+			}
 		}
 	}()
 
@@ -58,7 +63,7 @@ func ReceiveFromQ(){
 		for d := range msgsGetUser {
 			log.Printf("Received a message: %s - %s", d.Body,d.CorrelationId)
 			//	ProcessMessage(2)
-			SendToQ("user.read.reply", "Reply: processed", "read_advert_reply", "account")
+			SendToQ("user.read.reply", "Reply: processed",  "account", d.CorrelationId)
 		}
 	}()
 
@@ -85,3 +90,27 @@ func ProcessMessage(process int){
 	}
 
 }
+
+
+func CreateUser(jsonData []byte, correlationId string) bool{
+
+	c := credentials.NewSharedCredentials("", "default")
+
+	err1 := dynamodb.Connect(c, configs.EU_WEST_2)
+
+	if err1 != nil {
+		panic(err1)
+	}
+
+	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttributeFromByte(jsonData, models.User{})
+
+	if !HandleErrorEvent(errDecode, correlationId, false) {
+
+		err := dynamodb.CreateItem(dynamoAttr)
+
+		HandleErrorEvent(err, correlationId,  false)
+	}
+
+		return true
+	}
+
