@@ -45,8 +45,6 @@ func DecodeToDynamoAttributeFromByte(jsonData []byte, m interface{}) (map[string
 	return av, nil
 }
 
-
-
 /**
 * Convert the interface fields into a map
 **/
