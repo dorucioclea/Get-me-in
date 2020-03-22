@@ -19,16 +19,16 @@ func HandleError(err error, w http.ResponseWriter, isCustom bool) bool{
 	return false
 }
 
-func HandleErrorEvent(err error, correlationId string, isCustom bool) bool{
+func HandleErrorEvent(err error, correlationId string, routingKey string, isCustom bool) bool{
 
 	if err != nil {
 		if isCustom {
 			e := err.(*dynamodb.ErrorString)
-			SendToQ("user.create.reply", string(e.Code) + e.Reason,  "account", correlationId)
+			SendToQ(routingKey, string(e.Code) + e.Reason,  "account", correlationId)
 			return true
 		}
 
-		SendToQ("user.create.reply", err.Error(),  "account", correlationId)
+		SendToQ(routingKey, err.Error(),  "account", correlationId)
 		return true
 	}
 	return false

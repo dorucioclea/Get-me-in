@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	q_helper "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
@@ -11,11 +12,10 @@ import (
 
 func main() {
 	loadEnvConfigs()
-	//internal.SetupEndpoints()
 
+	internal.ConnectToDynamoDB()
 
-	q_helper.ReceiveFromQ()
-
+	event_driven.ReceiveFromAllQs()
 }
 
 //TODO: improve workflow
@@ -41,5 +41,5 @@ func loadEnvConfigs() {
 	}
 
 	fmt.Println("Environment:" + env)
-
 }
+
