@@ -1,4 +1,4 @@
-package internal
+package api
 
 import (
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"

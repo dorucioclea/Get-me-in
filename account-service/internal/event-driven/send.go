@@ -36,7 +36,7 @@ func SendToQ(routingKey string, body string, exchange string, correlationId stri
 	failOnError(err, "Failed to publish a message")
 }
 
-func newUUID() string{
+func NewUUID() string{
 	b := make([]byte, 16)
 	_, err := rand.Read(b)
 	if err != nil {
