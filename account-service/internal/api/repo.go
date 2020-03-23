@@ -1,10 +1,10 @@
-package internal
+package api
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
+	event_driven "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -29,14 +29,17 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttribute(r.Body, models.User{})
 
-	if !event_driven.HandleError(errDecode, w, false) {
+	body := r.Body
+	dynamoAttr, errDecode, json := dynamodb.DecodeToDynamoAttributeAndJson(body, models.User{})
+
+	if !HandleError(errDecode, w, false) {
 
 		err := dynamodb.CreateItem(dynamoAttr)
 
-		if !event_driven.HandleError(err, w, false) {
+		if !HandleError(err, w, false) {
 			w.WriteHeader(http.StatusOK)
+			go event_driven.UserCreatedEvent(json)
 		}
 	}
 }
@@ -44,10 +47,10 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	result, err := dynamodb.GetItem(ExtractValue(w, r))
 
-	if !event_driven.HandleError(err, w, true) {
+	if !HandleError(err, w, true) {
 		b, err := json.Marshal(dynamodb.Unmarshal(result, models.User{}))
 
-		if !event_driven.HandleError(err, w, false) {
+		if !HandleError(err, w, false) {
 
 			w.Write([]byte(b))
 			w.WriteHeader(http.StatusOK)
@@ -62,11 +65,11 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	result, err := dynamodb.GetItem(extractValue)
 
 	//error thrown, record not found
-	if !event_driven.HandleError(err, w, true) {
+	if !HandleError(err, w, true) {
 
 		errDelete := dynamodb.DeleteItem(extractValue)
 
-		if !event_driven.HandleError(errDelete, w, false) {
+		if !HandleError(errDelete, w, false) {
 
 			http.Error(w, result.GoString(), 204)
 		}
@@ -85,7 +88,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	bodyMap, err := dynamodb.DecodeToMap(r.Body, models.Credentials{})
 
 	if err != nil {
-		event_driven.HandleError(err, w, false)
+		HandleError(err, w, false)
 	}
 
 	//get the values
@@ -96,7 +99,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// if there is an error or record not found
 	if error != nil {
-		event_driven.HandleError(error, w, true)
+		HandleError(error, w, true)
 	}
 
 	u := dynamodb.Unmarshal(result, models.Credentials{})
@@ -116,7 +119,7 @@ func StringFromMap(m map[string]interface{}, p string) string {
 func ExtractValue(w http.ResponseWriter, r *http.Request) string {
 
 	v, err := dynamodb.GetParameterValue(r.Body, models.User{})
-	event_driven.HandleError(err, w, false)
+	HandleError(err, w, false)
 
 	return v
 }

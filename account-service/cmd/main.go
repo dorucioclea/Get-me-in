@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/api"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
@@ -14,8 +14,9 @@ func main() {
 	loadEnvConfigs()
 
 	internal.ConnectToDynamoDB()
+	api.SetupEndpoints()
 
-	event_driven.ReceiveFromAllQs()
+	//event_driven.ReceiveFromAllQs()
 }
 
 //TODO: improve workflow

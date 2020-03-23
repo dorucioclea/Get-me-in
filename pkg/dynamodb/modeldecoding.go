@@ -26,7 +26,28 @@ func DecodeToDynamoAttribute(readBody io.ReadCloser, m interface{}) (map[string]
 	}
 
 	return av, nil
+
 }
+
+func DecodeToDynamoAttributeAndJson(readBody io.ReadCloser, m interface{}) (map[string]*dynamodb.AttributeValue, error, string){
+
+	bodyMap, err := DecodeToMap(readBody, m)
+	jsonString, err := json.Marshal(bodyMap)
+
+	if err != nil{
+		return nil, err, ""
+	}
+
+	av, errM := dynamodbattribute.MarshalMap(bodyMap)
+
+	if errM != nil {
+		return nil, errM, ""
+	}
+
+	return av, nil, string(jsonString)
+
+}
+
 
 func DecodeToDynamoAttributeFromByte(jsonData []byte, m interface{}) (map[string]*dynamodb.AttributeValue, error){
 
