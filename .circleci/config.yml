@@ -37,7 +37,6 @@ jobs:
 
     steps:
       - checkout
-
       - setup_remote_docker:
           docker_layer_caching: true
 
@@ -74,3 +73,20 @@ jobs:
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker push circleci/cci-demo-docker:$TAG
             =324
+
+#       - run:
+#           name: post checkout check
+#           command: |
+#             echo $PWD
+#             ls -aslh .
+#             ls -aslh ~
+#             ls -aslh ~/tmp
+
+      # specify any bash command here prefixed with `run: `
+#      - run: go get -v -t -d ./account-service/...
+#      - run: go build -v ./account-service/cmd
+#      - run: go get -v -t -d ./marketing-service/...
+#      - run: go build -v ./marketing-service/cmd
+#      - run: go get -v -t -d ./auth-service/...
+#      - run: go build -v ./auth-service/cmd
+
