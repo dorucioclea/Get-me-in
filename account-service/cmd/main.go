@@ -19,7 +19,6 @@ func main() {
 	//event_driven.ReceiveFromAllQs()
 }
 
-//TODO: improve workflow
 func loadEnvConfigs() {
 
 	var env = ""

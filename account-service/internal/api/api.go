@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	event_driven "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
+	event "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -38,8 +38,11 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		err := dynamodb.CreateItem(dynamoAttr)
 
 		if !HandleError(err, w, false) {
+			//JSON format of the newly created user
+			w.Write([]byte(json))
 			w.WriteHeader(http.StatusOK)
-			go event_driven.UserCreatedEvent(json)
+
+			go event.BroadcastUserCreatedEvent(json)
 		}
 	}
 }
@@ -52,7 +55,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 		if !HandleError(err, w, false) {
 
-			w.Write([]byte(b))
+			w.Write(b)
 			w.WriteHeader(http.StatusOK)
 		}
 	}

@@ -19,4 +19,3 @@ func CreateUser(userJson []byte, correlationId string) bool{
 
 	return true
 }
-
