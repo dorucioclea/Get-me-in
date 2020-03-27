@@ -28,7 +28,9 @@ func SetupEndpoints() {
 	_router.HandleFunc("/connect", wrapHandlerWithAuth(ConnectToInstance))
 
 	// Register
+	//TODO: Extra security here
 	_router.HandleFunc("/account", wrapHandlerWithAuth(CreateUser)).Methods("PUT")
+	
 	_router.HandleFunc("/account", wrapHandlerWithAuth(DeleteUser)).Methods("DELETE")
 	_router.HandleFunc("/account", wrapHandlerWithAuth(UpdateUser)).Methods("PATCH")
 	_router.HandleFunc("/account", wrapHandlerWithAuth(GetUser)).Methods("GET")
