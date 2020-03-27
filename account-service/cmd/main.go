@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal"
+	"github.com/ProjectReferral/Get-me-in/account-service/internal/api"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"os"
@@ -11,30 +12,34 @@ import (
 
 func main() {
 	loadEnvConfigs()
-	internal.SetupEndpoints()
+
+	internal.ConnectToDynamoDB()
+	api.SetupEndpoints()
+
+	//event_driven.ReceiveFromAllQs()
 }
 
-//TODO: improve workflow
 func loadEnvConfigs() {
 
-	fmt.Print("Running on ")
+	var env = ""
 
-	dynamodb.SearchParam = configs.QUERY_PARAM
+	fmt.Printf("Running on %s \n", configs.PORT)
+
+	configs.BrokerUrl = os.Getenv("broker_url")
+	dynamodb.SearchParam = configs.UNIQUE_IDENTIFIER
 	dynamodb.GenericModel = models.User{}
 
 	switch env := os.Getenv("ENV"); env {
 	case "DEV":
 		dynamodb.DynamoTable = "dev-users"
-		fmt.Println(env)
 	case "UAT":
 		dynamodb.DynamoTable = "uat-users"
-		fmt.Println(env)
 	case "PROD":
 		dynamodb.DynamoTable = "prod-users"
-		fmt.Println(env)
-
 	default:
 		dynamodb.DynamoTable = "dev-users"
-		fmt.Println(env)
 	}
+
+	fmt.Println("Environment:" + env)
 }
+
