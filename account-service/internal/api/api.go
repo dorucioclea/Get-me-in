@@ -7,7 +7,6 @@ import (
 	event "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"net/http"
 )
 
@@ -15,7 +14,7 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
+/*func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 	c := credentials.NewSharedCredentials("", "default")
 
 	err := dynamodb.Connect(c, configs.EU_WEST_2)
@@ -26,9 +25,11 @@ func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-}
+}*/
 
 func CreateUser(w http.ResponseWriter, r *http.Request) {
+
+	//TODO: reCaptcha check, 30ms average
 
 	body := r.Body
 	dynamoAttr, errDecode, json := dynamodb.DecodeToDynamoAttributeAndJson(body, models.User{})

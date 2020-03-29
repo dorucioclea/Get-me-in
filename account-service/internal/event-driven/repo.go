@@ -1,12 +1,6 @@
 package event_driven
 
-import (
-	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
-	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
-)
-
-func CreateUser(userJson []byte, correlationId string) bool{
+/*func CreateUser(userJson []byte, correlationId string) bool{
 
 	dynamoAttr, errDecode := dynamodb.DecodeToDynamoAttributeFromByte(userJson, models.User{})
 
@@ -18,5 +12,5 @@ func CreateUser(userJson []byte, correlationId string) bool{
 	}
 
 	return true
-}
+}*/
 

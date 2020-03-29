@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-func SendToQ(routingKey string, body string, exchange string, correlationId string){
+func SendToQ(body string, exchange string, correlationId string){
 	conn, err := amqp.Dial(configs.BrokerUrl)
 
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -22,7 +22,7 @@ func SendToQ(routingKey string, body string, exchange string, correlationId stri
 
 	err = ch.Publish(
 		exchange,     // exchange
-		routingKey, // routing key
+		"", // routing key
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing {

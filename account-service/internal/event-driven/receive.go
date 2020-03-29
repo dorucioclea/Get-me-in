@@ -1,11 +1,8 @@
 package event_driven
 
-import (
-	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	"github.com/streadway/amqp"
-	"log"
-)
+import "log"
 
+/*
 func ReceiveFromAllQs(){
 	conn, err := amqp.Dial(configs.BrokerUrl)
 	log.Printf("Listening on Q: %s", configs.Q_POSTUSER)
@@ -72,6 +69,7 @@ func ReceiveFromAllQs(){
 	//Debugging purposes
 	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
 }
+*/
 
 func failOnError(err error, msg string) {
 	if err != nil {

@@ -1,10 +1,6 @@
 package event_driven
 
-import (
-	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
-)
-
-func HandleErrorEvent(err error, correlationId string, routingKey string, isCustom bool) bool{
+/*func HandleErrorEvent(err error, correlationId string, routingKey string, isCustom bool) bool{
 
 	if err != nil {
 		if isCustom {
@@ -17,4 +13,4 @@ func HandleErrorEvent(err error, correlationId string, routingKey string, isCust
 		return true
 	}
 	return false
-}
+}*/
