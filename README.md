@@ -4,8 +4,6 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat)]()
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
-
-
 # Referral Marketing System
 
 ## Overview
@@ -33,10 +31,6 @@ Front end will be designed using React and Redux.
 #### Deploy process:
 We using CircleCI to manage our continuous integration environment. To manage our infrastructure, we are using Docker and AWS.
 
+![High-level Architecture](Q-split-6.png)
 
-
-
-
-
-[Diagram to be added]
 
