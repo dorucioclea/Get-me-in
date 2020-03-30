@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ProjectReferral/Get-me-in/account-service/configs"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/api"
 	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
+	"log"
 	"os"
 )
 
@@ -15,15 +15,13 @@ func main() {
 
 	internal.ConnectToDynamoDB()
 	api.SetupEndpoints()
-
-	//event_driven.ReceiveFromAllQs()
 }
 
 func loadEnvConfigs() {
 
 	var env = ""
 
-	fmt.Printf("Running on %s \n", configs.PORT)
+	log.Println("Running on %s \n", configs.PORT)
 
 	configs.BrokerUrl = os.Getenv("broker_url")
 	dynamodb.SearchParam = configs.UNIQUE_IDENTIFIER
@@ -40,6 +38,6 @@ func loadEnvConfigs() {
 		dynamodb.DynamoTable = "dev-users"
 	}
 
-	fmt.Println("Environment:" + env)
+	log.Println("Environment:" + env)
 }
 

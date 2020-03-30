@@ -41,7 +41,6 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		fmt.Sprintf(err.Error())
 	}
 
-	//security.VerifyToken(tr.AccessToken)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(b))
 }
@@ -59,7 +58,6 @@ func IssueToken(req *http.Request) security.TokenResponse{
 		NotBefore:  t.Unix(),
 		Id:         req.Header.Get("Id"),
 	}
-	fmt.Println(token)
 
 	tr := security.TokenResponse{
 		AccessToken:  security.GenerateToken(token),

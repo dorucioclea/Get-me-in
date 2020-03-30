@@ -1,7 +1,5 @@
 package event_driven
 
-import "log"
-
 /*
 func ReceiveFromAllQs(){
 	conn, err := amqp.Dial(configs.BrokerUrl)
@@ -71,9 +69,4 @@ func ReceiveFromAllQs(){
 }
 */
 
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
-	}
-}
 

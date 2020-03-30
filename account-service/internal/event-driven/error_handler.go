@@ -1,5 +1,7 @@
 package event_driven
 
+import "log"
+
 /*func HandleErrorEvent(err error, correlationId string, routingKey string, isCustom bool) bool{
 
 	if err != nil {
@@ -14,3 +16,9 @@ package event_driven
 	}
 	return false
 }*/
+
+func failOnError(err error, msg string) {
+	if err != nil {
+		log.Fatalf("%s: %s", msg, err)
+	}
+}

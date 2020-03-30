@@ -14,19 +14,6 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-/*func ConnectToInstance(w http.ResponseWriter, r *http.Request) {
-	c := credentials.NewSharedCredentials("", "default")
-
-	err := dynamodb.Connect(c, configs.EU_WEST_2)
-
-	if err != nil {
-		e := err.(*dynamodb.ErrorString)
-		http.Error(w, e.Reason, e.Code)
-	}
-
-	w.WriteHeader(http.StatusOK)
-}*/
-
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	//TODO: reCaptcha check, 30ms average
