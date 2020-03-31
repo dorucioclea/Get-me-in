@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/api"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
+	"github.com/ProjectReferral/Get-me-in/account-api/configs"
+	"github.com/ProjectReferral/Get-me-in/account-api/internal"
+	"github.com/ProjectReferral/Get-me-in/account-api/internal/api"
+	"github.com/ProjectReferral/Get-me-in/account-api/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"log"
 	"os"

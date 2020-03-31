@@ -3,9 +3,9 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/account-service/configs"
-	event "github.com/ProjectReferral/Get-me-in/account-service/internal/event-driven"
-	"github.com/ProjectReferral/Get-me-in/account-service/internal/models"
+	"github.com/ProjectReferral/Get-me-in/account-api/configs"
+	event "github.com/ProjectReferral/Get-me-in/account-api/internal/event-driven"
+	"github.com/ProjectReferral/Get-me-in/account-api/internal/models"
 	"github.com/ProjectReferral/Get-me-in/pkg/dynamodb"
 	"net/http"
 )

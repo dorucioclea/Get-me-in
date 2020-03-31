@@ -3,7 +3,7 @@ package event_driven
 import (
 	"crypto/rand"
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/account-service/configs"
+	"github.com/ProjectReferral/Get-me-in/account-api/configs"
 	"github.com/streadway/amqp"
 	"log"
 )

@@ -1,6 +1,6 @@
 package event_driven
 
-import "github.com/ProjectReferral/Get-me-in/account-service/configs"
+import "github.com/ProjectReferral/Get-me-in/account-api/configs"
 
 func BroadcastUserCreatedEvent(body string){
 	uId := NewUUID()
