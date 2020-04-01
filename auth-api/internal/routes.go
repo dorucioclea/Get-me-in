@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/ProjectReferral/Get-me-in/auth-service/configs"
+	"github.com/ProjectReferral/Get-me-in/auth-api/configs"
 	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"github.com/gorilla/mux"
 	"log"
@@ -12,6 +12,7 @@ func SetupEndpoints(){
 	_router := mux.NewRouter()
 
 	_router.HandleFunc("/auth", wrapHandlerWithAuth(VerifyCredentials)).Methods("GET")
+	_router.HandleFunc("/auth/temp", wrapHandlerWithAuth(IssueTempToken)).Methods("GET")
 	_router.HandleFunc("/mock", wrapHandlerWithAuth(MockResponse)).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(configs.PORT, _router))

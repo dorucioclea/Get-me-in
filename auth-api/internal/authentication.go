@@ -3,7 +3,7 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ProjectReferral/Get-me-in/auth-service/configs"
+	"github.com/ProjectReferral/Get-me-in/auth-api/configs"
 	request "github.com/ProjectReferral/Get-me-in/pkg/http_lib"
 	"github.com/ProjectReferral/Get-me-in/pkg/security"
 	"io/ioutil"
@@ -33,7 +33,19 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	token := IssueToken(req)
+	token := IssueToken(req, configs.EXPIRY)
+
+	b, err := json.Marshal(token)
+	if err != nil {
+		fmt.Sprintf(err.Error())
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(b))
+}
+
+func IssueTempToken(w http.ResponseWriter, req *http.Request){
+	token := IssueToken(req, configs.TEMP_EXPIRY)
 
 	b, err := json.Marshal(token)
 
@@ -45,9 +57,9 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 	w.Write([]byte(b))
 }
 
-func IssueToken(req *http.Request) security.TokenResponse{
+func IssueToken(req *http.Request, expiry time.Duration) security.TokenResponse{
 	t := time.Now()
-	e := t.Add(configs.EXPIRY * time.Minute)
+	e := t.Add(expiry * time.Minute)
 
 	token := &security.TokenClaims{
 		Issuer:     configs.SERVICE_ID,
@@ -56,7 +68,7 @@ func IssueToken(req *http.Request) security.TokenResponse{
 		IssuedAt:   t.Unix(),
 		Expiration: e.Unix(),
 		NotBefore:  t.Unix(),
-		Id:         req.Header.Get("Id"),
+		Id:         req.Header.Get("id"),
 	}
 
 	tr := security.TokenResponse{
