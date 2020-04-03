@@ -17,9 +17,9 @@ At the current scope, the referrer will advertise the job opportunity which will
 All the current microservices are built using GO with a mix of request-driven and event-driven architecture. For event-driven, we using RabbitMQ to broadcast messages.
 
 #### Current services:
-- Authentication Service(auth-service) - handles the lifecycle of JSON Web Tokens(JWT).
-- Account Service(account-service) - handles all the CRUD operations to do with users.
-- Marketing Service(marketing-service) - handles all the CRUD operations to do with job adverts.
+- [Under dev]Authentication Service(auth-service) - handles the lifecycle of JSON Web Tokens(JWT).
+- [Under dev]Account Service(account-service) - handles all the CRUD operations to do with users.
+- [Under dev]Marketing Service(marketing-service) - handles all the CRUD operations to do with job adverts.
 
 #### New services under development/analysis:
 - Customer Service(customer-service) - handles email confirmations, reset passwords and any other communications between the consumer and producer.
@@ -29,7 +29,13 @@ All the current microservices are built using GO with a mix of request-driven an
 Front end will be designed using React and Redux.
 
 #### Deploy process:
-We using CircleCI to manage our continuous integration environment. To manage our infrastructure, we are using Docker and AWS.
+We using CircleCI to manage our build pipeline. To manage our infrastructure, we are using Docker and AWS.
+
+##### Future work:
+- Service orchestration using K8s or Docker Swarms
+- Setup ELB(Elastic Load Balancer)
+- Terraform to manage AWS infrastructure
+- Setup Grafana
 
 ![High-level Architecture](Q-split-6.png)
 
