@@ -31,12 +31,14 @@ Front end will be designed using React and Redux.
 #### Deploy process:
 We using CircleCI to manage our build pipeline. To manage our infrastructure, we are using Docker and AWS.
 
-##### Future work:
+#### Future work:
 - Service orchestration using K8s or Docker Swarms
 - Setup ELB(Elastic Load Balancer)
 - Terraform to manage AWS infrastructure
 - Setup Grafana
 
+
+## High level overview
 ![High-level Architecture](Q-split-6.png)
 
 
