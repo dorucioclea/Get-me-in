@@ -11,7 +11,13 @@ import (
 	"time"
 )
 
+//Validates the request as human/robot with recaptcha
+//Validates the credentials via a request to the Account-API
+//Token is issued as a JSON with an expiry time of 2.5days
+//This token will allow the user to access the [/GET,/PATCH,/DELETE] endpoints for the Account-API
 func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
+
+	//TODO: reCaptchacheck
 
 	body, err := ioutil.ReadAll(req.Body)
 
@@ -19,8 +25,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 	}
 
-	m := map[string]string{"Authorization": req.Header.Get("Authorization")}
-	resp, err := request.Get(configs.LOGIN_ENDPOINT, body, m)
+	resp, err := request.Get(configs.LOGIN_ENDPOINT, body, nil)
 
 	if err != nil {
 		e := err.(*request.ErrorString)
@@ -33,7 +38,7 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	token := IssueToken(req, configs.EXPIRY)
+	token := IssueToken(req, configs.EXPIRY, configs.AUTH_AUTHENTICATED)
 
 	b, err := json.Marshal(token)
 	if err != nil {
@@ -41,11 +46,13 @@ func VerifyCredentials(w http.ResponseWriter, req *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(b))
+	w.Write(b)
 }
 
-func IssueTempToken(w http.ResponseWriter, req *http.Request){
-	token := IssueToken(req, configs.TEMP_EXPIRY)
+//A temporary token can be requested for registration
+//This token will only allow the user to access the /PUT endpoint for the Account-API
+func IssueRegistrationTempToken(w http.ResponseWriter, req *http.Request){
+	token := IssueToken(req, configs.TEMP_EXPIRY, configs.AUTH_REGISTER)
 
 	b, err := json.Marshal(token)
 
@@ -54,17 +61,17 @@ func IssueTempToken(w http.ResponseWriter, req *http.Request){
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(b))
+	w.Write(b)
 }
 
-func IssueToken(req *http.Request, expiry time.Duration) security.TokenResponse{
+func IssueToken(req *http.Request, expiry time.Duration, audience string) security.TokenResponse{
 	t := time.Now()
 	e := t.Add(expiry * time.Minute)
 
 	token := &security.TokenClaims{
 		Issuer:     configs.SERVICE_ID,
 		Subject:    configs.SUBJECT,
-		Audience:   req.Header.Get("Origin"),
+		Audience:   audience,
 		IssuedAt:   t.Unix(),
 		Expiration: e.Unix(),
 		NotBefore:  t.Unix(),

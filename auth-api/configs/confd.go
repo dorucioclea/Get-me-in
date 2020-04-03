@@ -16,6 +16,8 @@ const (
 	EXPIRY = 3600
 	//5 minutes
 	TEMP_EXPIRY = 5
+	AUTH_REGISTER = "register_user"
+	AUTH_AUTHENTICATED = "crud"
 	/*********************************************/
 )
 
